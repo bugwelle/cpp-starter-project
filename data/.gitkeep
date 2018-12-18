@@ -1,0 +1,2 @@
+`.gitkeep` files only exists for git to be able to track empty folders.
+It isn't handled in any special way like `.gitignore` files.

@@ -1,0 +1,20 @@
+---
+Language:             Cpp
+BasedOnStyle:         WebKit
+ColumnLimit:          120
+FixNamespaceComments: true
+
+AlwaysBreakTemplateDeclarations:   true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine:  Empty
+BreakBeforeBraces:                 Custom
+BraceWrapping:
+  AfterFunction:        true
+  AfterNamespace:       false
+  AfterStruct:          false
+  BeforeCatch:          false
+  BeforeElse:           false
+  SplitEmptyFunction:   false
+  SplitEmptyNamespace:  true
+  SplitEmptyRecord:     false
+...

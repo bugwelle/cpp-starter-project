@@ -1,0 +1,53 @@
+# CI configuration for cpp-starter-project
+
+image: registry.gitlab.com/bugwelle/docker-modern-cpp-cmake:master
+
+stages:
+  - check
+  - build
+  - test
+
+clang_format:
+  stage: check
+  script:
+    - ./tools/run_clang_format.sh
+    - git diff --diff-filter=M --color | cat
+    - git diff --diff-filter=M --quiet || (echo "Found unformatted files! Use clang-format!"; exit 1)
+
+cmake_format:
+  stage: check
+  script:
+    - ./tools/run_cmake_format.sh
+    - git diff --diff-filter=M --color | cat
+    - git diff --diff-filter=M --quiet || (echo "Found unformatted CMakeLists.txt! Use cmake-format!"; exit 1)
+
+cppcheck:
+  stage: check
+  script:
+    - ./tools/run_cppcheck.sh
+
+clang_tidy:
+  stage: build
+  script:
+    - ./tools/build_run_clang_tidy.sh
+    - git diff --diff-filter=M --color | cat
+    - git diff --diff-filter=M --quiet || (echo "Found fixable errors! Use clang-tidy!"; exit 1)
+
+build_project_release:
+  stage: build
+  script:
+    - mkdir build && cd $_
+    - conan install ..
+    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$(which g++-8) ..
+    - make -j2 cpp_starter
+
+run_unit_tests:
+  stage: test
+  script:
+    - echo "GCC8 $(which g++-8)"
+    - echo $CXX
+    - mkdir build && cd $_
+    - conan install ..
+    - cmake -DCMAKE_CXX_COMPILER=$(which g++-8) ..
+    - make -j2 cpp_test
+    - make test

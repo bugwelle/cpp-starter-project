@@ -1,0 +1,133 @@
+# Defaults
+language: cpp
+os: linux
+dist: xenial
+
+stages:
+- check
+- test
+- name: deploy
+  if: branch = master
+
+matrix:
+  include:
+
+  #----------------------------------------------------------------------------
+  # Check Stage
+  # We run some linters and code formatters to check our code base. If this
+  # already fails, we can skip others stages.
+  #----------------------------------------------------------------------------
+
+  # Travis CI has integrated ShellCheck by default. This is faster than using
+  # cmake with shellcheck target because we don't need to install conan
+  # dependencies.
+  - name: "shellcheck linting"
+    stage: check
+    language: shell
+    script:
+    - shellcheck --version
+    - find . ! -path "./build/*" ! -path "./tools/*"
+      -type f \( -name "*.sh" \)
+      -exec shellcheck {} \;
+
+  - name: "cmake-format check"
+    stage: check
+    language: python
+    python: ['3.6']
+    addons: { apt: { packages: ['python3-setuptools', 'python3-pip'] } }
+    install:
+      - pip install cmake_format
+    before_script:
+      - cmake-format --version
+    script:
+      - ./tools/run_cmake_format.sh
+      - git diff --diff-filter=M --color | cat
+      - git diff --diff-filter=M --quiet || (echo "Found unformatted CMakeLists.txt! Use cmake-format!"; exit 1)
+
+# TODO
+#  - name: "clang-tidy linting"
+#    stage: check
+#    language: cpp
+#    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
+#    install:
+#      - pip3 install conan
+#    script:
+#      - ./tools/build_run_clang_tidy.sh
+#      - git diff --diff-filter=M --color | cat
+#      - git diff --diff-filter=M --quiet || (echo "Found fixable errors! Use clang-tidy!"; exit 1)
+
+  - name: "cppcheck linting"
+    stage: check
+    language: minimal
+    addons: { apt: { packages: ['cppcheck'] } }
+    before_script:
+      - cppcheck --version
+    script:
+      - ./tools/run_cppcheck.sh
+
+  #----------------------------------------------------------------------------
+  # Test Stage
+  # Build and test our application on macOS and linux. All stages have the
+  # script job in common (see end of this yml).
+  #----------------------------------------------------------------------------
+
+  # macOS build and test using system's clang. Dependencies are installed
+  # using the Homebrew addon, though "brew install ABC" works as well.
+  - name: "macOS clang"
+    stage: test
+    os: osx
+    osx_image: xcode10
+    compiler: clang
+    addons: { homebrew: { packages: ['cmake'] } }
+    install:
+    #- brew upgrade cmake # Update to latest version
+      - pip install conan
+
+  # Linux build and test using system's gcc and clang. Dependencies are
+  # installed using the APT addon, though "apt-get install ABC" works as well.
+  # We need some python packages to install conan.
+  - name: "linux build with GCC 7"
+    stage: test
+    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-7', 'python3-setuptools', 'python3-pip'] } }
+    env:
+      - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    before_install:
+      - eval "${MATRIX_EVAL}"
+    # See https://docs.conan.io/en/latest/integrations/travisci.html
+    install:
+      - pip3 install conan
+      - conan user
+
+  # Windows build and test. Windows support is currently in beta on Travis.
+  # CMake and MinGw are installed by default.
+  - name: "Windows builds"
+    stage: test
+    os: windows
+    env:
+      - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
+    install:
+      - choco install python3
+      - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+      - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+      - python get-pip.py --user
+      - python -m pip install conan
+      - conan user
+    script:
+      - conan install ..
+      - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
+        cmake --build . -j 2 --config "Debug"  &&
+        ctest -j2
+
+  #----------------------------------------------------------------------------
+  # Deploy Stage
+  # TODO
+  #----------------------------------------------------------------------------
+
+before_script:
+  - mkdir build && cd $_
+
+script:
+  - conan install ..
+  - cmake -DCMAKE_BUILD_TYPE=Debug ..     &&
+    cmake --build . -j 2 --config "Debug" &&
+    ctest -j2
