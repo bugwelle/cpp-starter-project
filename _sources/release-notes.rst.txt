@@ -1,0 +1,24 @@
+.. |br| raw:: html
+
+   <br />
+
+=============
+Release Notes
+=============
+
+.. note::
+
+  This information is drawn from the GitHub cpp-starter-project changelog: |br|
+  https://github.com/bugwelle/cpp-starter-project/blob/master/CHANGELOG.md
+
+
+Since previous release
+************************************
+
+ - Preliminary support for fix suggestions
+
+
+v0.1.0 - 2018-12-18
+************************************
+
+  - First release (`#1 <https://github.com/bugwelle/cpp-starter-project/issues/1>`_)
