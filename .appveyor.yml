@@ -6,6 +6,7 @@ clone_folder: c:\projects\source
 environment:
   matrix:
   - GENERATOR: MinGW Makefiles
+  - GENERATOR: MSYS Makefiles
   - GENERATOR: Visual Studio 15 2017 Win64
 
 install:
@@ -15,6 +16,9 @@ install:
   - cmd: pip.exe install conan
   - cmd: conan user # Create the conan data directory
   - cmd: conan --version
+
+before_build:
+  - cmd: set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
 
 build_script:
   - cmd: mkdir build
