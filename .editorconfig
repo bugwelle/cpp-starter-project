@@ -16,5 +16,8 @@ trim_trailing_whitespace = false
 [*.yml]
 indent_size = 2
 
-[CMakeLists.txt, *.cmake]
+[CMakeLists.txt]
+indent_size = 2
+
+[*.cmake]
 indent_size = 2

@@ -16,22 +16,31 @@ project(
 message("=> Project: ${PROJECT_NAME}")
 
 # -----------------------------------------------------------------------------
+# Project configuration options. Sanitizer options are defined in the
+# correspondig FindXX modules.
+# cmake-format: off
+option(ENABLE_CLANG_TIDY       "Analyze code with clang-tidy."                OFF)
+option(ENABLE_CLANG_TIDY_FIX   "Analyze code with clang-tidy and fix errors." OFF)
+option(ENABLE_COVERAGE         "Add coverage information to binaries."        OFF)
+option(ENABLE_COTIRE           "Add coverage information to binaries."        ON)
+# cmake-format: on
+
+# -----------------------------------------------------------------------------
 # CMake modules and other cmake related (third-party) scripts
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-find_package(Sanitizers) # For Thread/Address/Memory/UB Sanitizers
-find_package(Shellcheck)
-find_package(CMakeFormat)
-find_package(CppCheck)
-find_package(gcov)
-find_package(lcov)
+# for Thread/Address/Memory/UB Sanitizers
+find_package(Sanitizers)
 
 include(GenerateExportHeader) # TODO: WHY?
 include(WriteCompilerDetectionHeader) # TODO: Variable RESULT_VARIABLE; Why?
-include(cotire) # Used for precompiled headers and other optimizations
-include(warnings) # Custom function that enables compiler warnings
+
+include(project) # project functions and macros
+include(warnings) # custom function that enables compiler warnings
 include(GetGitRevisionDescription)
-include(coverage) # For lcov and gcov code coverage
+include(coverage) # for lcov and gcov code coverage
+include(clang-tidy)
+activate_cotire(cotire)
 
 # Package Manager includes
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
@@ -45,30 +54,11 @@ if(NOT GIT_SHA1)
   set(GIT_REV "0")
 endif()
 
-# -----------------------------------------------------------------------------
-# Project configuration options. Sanitizer options are defined in the
-# correspondig FindXX modules.
-# cmake-format: off
-option(OPTION_CLANG_TIDY       "Analyze code with clang-tidy."                OFF)
-option(OPTION_CLANG_TIDY_FIX   "Analyze code with clang-tidy and fix errors." OFF)
-option(OPTION_ENABLE_COVERAGE  "Add coverage information."                    OFF)
-# cmake-format: on
-
-if(OPTION_CLANG_TIDY)
-  message(STATUS "clang-tidy enabled")
-  set(CMAKE_CXX_CLANG_TIDY clang-tidy -format-style=file)
-
-elseif(OPTION_CLANG_TIDY_FIX)
-  message(STATUS "clang-tidy with auto-fix enabled")
-  set(CMAKE_CXX_CLANG_TIDY clang-tidy -format-style=file -fix)
-
-endif()
-
-enable_coverage(OPTION_ENABLE_COVERAGE)
+activate_coverage(ENABLE_COVERAGE)
 
 # -----------------------------------------------------------------------------
 # Some defaults for our targets. Currently warnings are enabled and the C++
-# standard is set to C++17. It simlifies handling multiple targets like
+# standard is set to C++17. It simplifies handling multiple targets like
 # different libraries without having to repeat all compile-features, etc.
 function(set_target_defaults target)
   if(NOT TARGET ${target})
@@ -85,6 +75,14 @@ function(set_target_defaults target)
   )
   enable_warnings(${target})
   target_enable_coverage(${target})
+endfunction()
+
+# Adapter function for cotire(). Applies cotire if ENABLE_COTIRE is ON. Useful
+# for running tests to avoid unity and pch targets.
+function(use_cotire target)
+  if(ENABLE_COTIRE)
+    cotire(${target})
+  endif()
 endfunction()
 
 # -----------------------------------------------------------------------------

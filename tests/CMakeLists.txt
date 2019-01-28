@@ -25,4 +25,4 @@ generate_coverage_report(cpp_test)
 # CMake test target
 add_test(NAME CppTest COMMAND cpp_test)
 
-cotire(cpp_test)
+use_cotire(cpp_test)

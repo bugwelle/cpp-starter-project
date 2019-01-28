@@ -5,9 +5,10 @@
 
 set(LCOV_EXCLUDE_COVERAGE)
 
-# Function to register a target for coverage
+# Function to register the target for coverage.
 function(generate_lcov_report coverage_target target)
     if(NOT TARGET coverage-init)
+        # Create initialize coverage target. Used for zeroing out counters, etc
         add_custom_target(
             coverage-zero
             COMMAND

@@ -2,7 +2,7 @@
 # init/blob/master/cmake/Coverage.cmake Modified
 include(${CMAKE_CURRENT_LIST_DIR}/Gcov.cmake)
 
-set(OPTION_COVERAGE_ENABLED OFF)
+set(COVERAGE_ENABLED OFF)
 
 set(
   LCOV_EXCLUDE_COVERAGE
@@ -12,7 +12,8 @@ set(
   "\"/usr/*\""
 )
 
-# Function to register a target for enabled coverage report
+# Function to register a target for enabled coverage report. Use this function
+# on test executables.
 function(generate_coverage_report target)
   if(NOT TARGET coverage)
     add_custom_target(coverage)
@@ -23,55 +24,60 @@ function(generate_coverage_report target)
     )
   endif()
 
-  if(${OPTION_COVERAGE_ENABLED})
+  if(${COVERAGE_ENABLED})
     generate_lcov_report(coverage-${target} ${target} ${ARGN})
     add_dependencies(coverage coverage-${target})
   endif()
 endfunction()
 
-# Enable or disable coverage
-function(enable_coverage status)
+# Enable or disable coverage. Sets COVERAGE_ENABLED which is used by
+# target_enable_coverage
+function(activate_coverage status)
   if(NOT ${status})
-    set(OPTION_COVERAGE_ENABLED ${status} PARENT_SCOPE)
+    set(COVERAGE_ENABLED ${status} PARENT_SCOPE)
     message(STATUS "Coverage lcov skipped: Manually disabled")
-
     return()
   endif()
 
   find_package(lcov)
 
   if(NOT lcov_FOUND)
-    set(OPTION_COVERAGE_ENABLED OFF PARENT_SCOPE)
+    set(COVERAGE_ENABLED OFF PARENT_SCOPE)
     message(STATUS "Coverage lcov skipped: lcov not found")
-
     return()
   endif()
 
-  set(OPTION_COVERAGE_ENABLED ${status} PARENT_SCOPE)
+  set(COVERAGE_ENABLED ${status} PARENT_SCOPE)
   message(STATUS "Coverage report enabled")
 endfunction()
 
 # Add compile/linker flags to the target for code coverage. Requires
-# OPTION_COVERAGE_ENABLED to be ON.
+# COVERAGE_ENABLED to be ON.
 function(target_enable_coverage target)
   if(NOT TARGET ${target})
     message(WARNING "target_enable_coverage: ${target} is not a target.")
     return()
   endif()
 
-  if(OPTION_COVERAGE_ENABLED)
+  if(COVERAGE_ENABLED)
     if(
       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
       OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"
     )
-      target_compile_options(${target} PRIVATE -fprofile-arcs -ftest-coverage)
+      target_compile_options(
+        ${target}
+        PRIVATE -g -fprofile-arcs -ftest-coverage --coverage
+      )
     endif()
 
     if(
       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
       OR "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux"
     )
-      target_link_libraries(${target} INTERFACE -fprofile-arcs -ftest-coverage)
+      target_link_libraries(
+        ${target}
+        INTERFACE -g -fprofile-arcs -ftest-coverage --coverage
+      )
     endif()
 
   endif()

@@ -5,8 +5,10 @@ clone_folder: c:\projects\source
 
 environment:
   matrix:
-  - GENERATOR: MinGW Makefiles
+  - BUILD: mingw
+    GENERATOR: MinGW Makefiles
   - GENERATOR: MSYS Makefiles
+    MINGW_ROOT: C:\msys64\mingw32
   - GENERATOR: Visual Studio 15 2017 Win64
 
 install:
