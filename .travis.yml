@@ -100,11 +100,11 @@ matrix:
 
   # Windows build and test. Windows support is currently in beta on Travis.
   # CMake and MinGw are installed by default.
-  - name: "Windows builds"
+  - name: "Windows GCC builds"
     stage: test
     os: windows
     env:
-      - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
+      #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
     install:
       - choco install python3
       - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
@@ -113,6 +113,7 @@ matrix:
       - python -m pip install conan
       - conan user
     script:
+      - gcc --version
       - conan install ..
       - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
         cmake --build . -j 2 --config "Debug"  &&
