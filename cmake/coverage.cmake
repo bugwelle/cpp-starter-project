@@ -10,6 +10,7 @@ set(
   "\"*/googletest/*\""
   "\"*v1*\""
   "\"/usr/*\""
+  "\"*/external/*\""
 )
 
 # Function to register a target for enabled coverage report. Use this function

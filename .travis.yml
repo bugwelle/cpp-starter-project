@@ -6,6 +6,7 @@ dist: xenial
 stages:
 - check
 - test
+- coverage
 - name: deploy
   if: branch = master
 
@@ -83,8 +84,8 @@ matrix:
     #- brew upgrade cmake # Update to latest version
       - pip install conan
 
-  # Linux build and test using system's gcc and clang. Dependencies are
-  # installed using the APT addon, though "apt-get install ABC" works as well.
+  # Linux build and test using gcc-7. Dependencies are installed using the APT
+  # addon, though "apt-get install ABC" works as well.
   # We need some python packages to install conan.
   - name: "linux build with GCC 7"
     stage: test
@@ -97,6 +98,22 @@ matrix:
     install:
       - pip3 install conan
       - conan user
+    script:
+      - conan install ..
+      - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
+        cmake --build . -j 2 --config "Debug"
+
+  # Linux build and test using system's gcc.
+  - name: "linux build with system GCC"
+    stage: test
+    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['python3-setuptools', 'python3-pip'] } }
+    install:
+      - pip3 install conan
+      - conan user
+    script:
+      - conan install ..
+      - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
+        cmake --build . -j 2 --config "Debug"
 
   # Windows build and test. Windows support is currently in beta on Travis.
   # CMake and MinGw are installed by default.
@@ -106,6 +123,7 @@ matrix:
     env:
       #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
     install:
+      - gcc --version
       - choco install python3
       - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
       - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
@@ -113,11 +131,36 @@ matrix:
       - python -m pip install conan
       - conan user
     script:
-      - gcc --version
       - conan install ..
       - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
         cmake --build . -j 2 --config "Debug"  &&
         ctest -j2
+
+  #----------------------------------------------------------------------------
+  # Coverage Stage
+  # Builds targets with "--coverage" and uses lcov to generate a coverage
+  # report.
+  #----------------------------------------------------------------------------
+
+  # Linux coverage build and test executaion using gcc-7. Dependencies are
+  # installed using the APT addon, though "apt-get install ABC" works as well.
+  # We need some python packages to install conan.
+  - name: "linux coverage run"
+    stage: coverage
+    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-7', 'python3-setuptools', 'python3-pip'] } }
+    env:
+      - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    before_install:
+      - eval "${MATRIX_EVAL}"
+    # See https://docs.conan.io/en/latest/integrations/travisci.html
+    install:
+      - pip3 install conan
+      - conan user
+    script:
+      - conan install ..
+      - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COTIRE=OFF -DENABLE_COVERAGE=ON &&
+        cmake --build . -j 2 -- coverage
+      - bash <(curl -s https://codecov.io/bash) -f coverage-filtered.info || echo "Codecov did not collect coverage reports"
 
   #----------------------------------------------------------------------------
   # Deploy Stage

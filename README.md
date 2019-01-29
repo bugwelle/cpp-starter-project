@@ -2,6 +2,8 @@
 [![Travis CI Build Status](https://img.shields.io/travis/pipeline/bugwelle/cpp-starter-project/master.svg?logo=travis)](https://travis-ci.org/bugwelle/cpp-starter-project)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/j56v8bgwtk24tuu9?svg=true)](https://ci.appveyor.com/project/archer96/cpp-starter-project)
 [![GitLab CI Pipeline Status](https://img.shields.io/gitlab/pipeline/bugwelle/cpp-starter-project.svg?logo=gitlab)](https://gitlab.com/bugwelle/cpp-starter-project/pipelines)
+[![codecov](https://codecov.io/gh/bugwelle/cpp-starter-project/branch/master/graph/badge.svg)](https://codecov.io/gh/bugwelle/cpp-starter-project)
+
 
 # cpp-starter-project
 
@@ -24,24 +26,25 @@ features that I'd like to have like package managers or continuous integration.
 This project aims to be a full-fledged entry point for new medium-sized projects.  
 Following features are included:
 
- - project structure common to C++ projects (similar to [pitchfork][pf])
- - modern C++ (currently C++17)
- - modern CMake >= 3.12
+ - [x] project structure common to C++ projects (similar to [pitchfork][pf])
+ - [x] modern C++ (currently C++17)
+ - [x] modern CMake >= 3.12
    (no more `include_directories(...)` or `link_libraries(...)`)
- - testing framework ([Catch2][catch2])
- - documentation using [Doxygen][doxygen] and [Sphinx][sphinx]
- - [GitHub Pages][ghpages] on `gh-pages` branch
- - code formatting because no one has got time for that in code reviews
+ - [x] testing framework ([Catch2][catch2])
+ - [x] user documentation using [Doxygen][doxygen] and [Sphinx][sphinx]
+ - [x] documentation using [Doxygen][doxygen] and [Sphinx][sphinx]
+ - [x] [GitHub Pages][ghpages] on `gh-pages` branch
+ - [x] code formatting because no one has got time for that in code reviews
      ([`clang-format`][clangfmt] and [`cmake-format`][cmakefmt])
- - static code analysis tools like linters
+ - [ ] static code analysis tools like linters
      ([`cppcheck`](cppcheck), [`clang-tidy`][clangtidy], [`shellcheck`][shcheck])
- - continuous integration: useful not only for pull requests
+ - [x] continuous integration: useful not only for pull requests
      ([Travis CI][travis], [AppVeyor][appveyor], [GitLab CI][gitlabci])
- - continuous deployment
+ - [ ] continuous deployment
      ([Bintray][bintray]), [GitHub Pages][githubpg])
- - code coverage using [Coveralls][coveralls]
- - third-party package management using [conan][conan]
- - CPack script for packaging
+ - [ ] code coverage using [Coveralls][coveralls]
+ - [x] third-party package management using [conan][conan]
+ - [ ] CPack script for packaging
 
 
 ## Inspiration
