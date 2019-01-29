@@ -98,10 +98,6 @@ matrix:
     install:
       - pip3 install conan
       - conan user
-    script:
-      - conan install ..
-      - cmake -DCMAKE_BUILD_TYPE=Debug ..     &&
-        cmake --build . -j 2 --config "Debug"
 
   - name: "linux build with GCC 8"
     stage: test
@@ -113,10 +109,6 @@ matrix:
     install:
       - pip3 install conan
       - conan user
-    script:
-      - conan install ..
-      - cmake -DCMAKE_BUILD_TYPE=Debug ..     &&
-        cmake --build . -j 2 --config "Debug"
 
   # Windows build and test. Windows support is currently in beta on Travis.
   # CMake and MinGw are installed by default.
@@ -138,7 +130,7 @@ matrix:
 #      - conan user
 #    script:
 #      - conan install ..
-#      - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
+#      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" ..      &&
 #        cmake --build . -j 2 --config "Debug"  &&
 #        ctest -j2
 
@@ -153,7 +145,7 @@ matrix:
   # We need some python packages to install conan.
   - name: "linux coverage run"
     stage: coverage
-    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-7', 'python3-setuptools', 'python3-pip'] } }
+    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-7', 'lcov', 'python3-setuptools', 'python3-pip'] } }
     env:
       - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
     before_install:
@@ -165,7 +157,7 @@ matrix:
     script:
       - conan install ..
       - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COTIRE=OFF -DENABLE_COVERAGE=ON &&
-        cmake --build . -j 2 -- coverage
+        make coverage
       - bash <(curl -s https://codecov.io/bash) -f coverage-filtered.info || echo "Codecov did not collect coverage reports"
 
   #----------------------------------------------------------------------------
@@ -178,6 +170,6 @@ before_script:
 
 script:
   - conan install ..
-  - cmake -DCMAKE_BUILD_TYPE=Debug ..     &&
-    cmake --build . -j 2 --config "Debug" &&
+  - cmake -DCMAKE_BUILD_TYPE=Debug ..            &&
+    cmake --build . -j $(nproc) --config "Debug" &&
     ctest -j2
