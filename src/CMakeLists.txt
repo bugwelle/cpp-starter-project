@@ -20,6 +20,5 @@ install(TARGETS cpp_starter RUNTIME DESTINATION bin)
 
 # -----------------------------------------------------------------------------
 # Other stuff
-add_sanitizers(cpp_starter)
 use_cotire(cpp_starter) # Cotire needs to be called *after* all sources have
                         # been added

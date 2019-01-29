@@ -32,15 +32,15 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 # for Thread/Address/Memory/UB Sanitizers
 find_package(Sanitizers)
 
+if(ENABLE_COTIRE)
+  include(cotire) # Used for precompiled headers and other optimizations
+endif()
 include(GenerateExportHeader) # TODO: WHY?
 include(WriteCompilerDetectionHeader) # TODO: Variable RESULT_VARIABLE; Why?
-
-include(project) # project functions and macros
 include(warnings) # custom function that enables compiler warnings
 include(GetGitRevisionDescription)
 include(coverage) # for lcov and gcov code coverage
 include(clang-tidy)
-activate_cotire(cotire)
 
 # Package Manager includes
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
@@ -75,6 +75,7 @@ function(set_target_defaults target)
   )
   enable_warnings(${target})
   target_enable_coverage(${target})
+  add_sanitizers(${target})
 endfunction()
 
 # Adapter function for cotire(). Applies cotire if ENABLE_COTIRE is ON. Useful

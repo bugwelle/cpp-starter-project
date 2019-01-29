@@ -69,11 +69,15 @@ cmake --build . --config "Debug"
 ## Testing
 
 ```sh
-# Enable coverage
-cmake -DOPTION_COVERAGE_ENABLED:BOOL=ON ..
+# Test
+cmake ..
 # Note: CMake >= 3.12 supports -jN, so we don't need to pass to to `make`
 cmake --build . -j 2
 ctest .
+
+# Create coverage
+cmake -ENABLE_COVERAGE:BOOL=ON ..
+cmake --build . -j 2 -- coverage
 ```
 
 ## Sanitizers

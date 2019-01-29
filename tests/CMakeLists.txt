@@ -19,7 +19,7 @@ target_sources(
 # having any effect.
 set_source_files_properties(main.cpp PROPERTIES COTIRE_EXCLUDED ON)
 
-# If OPTION_ENABLE_COVERAGE is set, generate a coverage report for this test.
+# If ENABLE_COVERAGE is set, generate a coverage report for this test.
 generate_coverage_report(cpp_test)
 
 # CMake test target
