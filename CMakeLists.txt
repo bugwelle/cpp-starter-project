@@ -22,7 +22,7 @@ message("=> Project: ${PROJECT_NAME}")
 option(ENABLE_CLANG_TIDY       "Analyze code with clang-tidy."                OFF)
 option(ENABLE_CLANG_TIDY_FIX   "Analyze code with clang-tidy and fix errors." OFF)
 option(ENABLE_COVERAGE         "Add coverage information to binaries."        OFF)
-option(ENABLE_COTIRE           "Add coverage information to binaries."        ON)
+option(ENABLE_COTIRE           "Disable cotire."                               ON)
 # cmake-format: on
 
 # -----------------------------------------------------------------------------

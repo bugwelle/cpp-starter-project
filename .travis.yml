@@ -130,7 +130,7 @@ matrix:
       - conan user
     script:
       - conan install ..
-      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" ..      &&
+      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MSYS Makefiles" ..      &&
         cmake --build . -j 2 --config "Debug"  &&
         ctest -j2
 
