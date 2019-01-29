@@ -112,27 +112,27 @@ matrix:
 
   # Windows build and test. Windows support is currently in beta on Travis.
   # CMake and MinGw are installed by default.
-#  - name: "Windows GCC builds"
-#    stage: test
-#    os: windows
-#    compiler: gcc
-#    env:
-#      #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
-#      - MATRIX_EVAL="CC=gcc && CXX=g++"
-#    before_install:
-#      - eval "${MATRIX_EVAL}"
-#    install:
-#      - choco install python3
-#      - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
-#      - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-#      - python get-pip.py --user
-#      - python -m pip install conan
-#      - conan user
-#    script:
-#      - conan install ..
-#      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" ..      &&
-#        cmake --build . -j 2 --config "Debug"  &&
-#        ctest -j2
+  - name: "Windows GCC builds"
+    stage: test
+    os: windows
+    compiler: gcc
+    env:
+      #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
+      - MATRIX_EVAL="CC=gcc && CXX=g++"
+    before_install:
+      - eval "${MATRIX_EVAL}"
+    install:
+      - choco install python3
+      - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+      - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+      - python get-pip.py --user
+      - python -m pip install conan
+      - conan user
+    script:
+      - conan install ..
+      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" ..      &&
+        cmake --build . -j 2 --config "Debug"  &&
+        ctest -j2
 
   #----------------------------------------------------------------------------
   # Coverage Stage
