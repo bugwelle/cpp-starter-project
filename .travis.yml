@@ -100,19 +100,22 @@ matrix:
       - conan user
     script:
       - conan install ..
-      - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
+      - cmake -DCMAKE_BUILD_TYPE=Debug ..     &&
         cmake --build . -j 2 --config "Debug"
 
-  # Linux build and test using system's gcc.
-  - name: "linux build with system GCC"
+  - name: "linux build with GCC 8"
     stage: test
-    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['python3-setuptools', 'python3-pip'] } }
+    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-8', 'python3-setuptools', 'python3-pip'] } }
+    env:
+      - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+    before_install:
+      - eval "${MATRIX_EVAL}"
     install:
       - pip3 install conan
       - conan user
     script:
       - conan install ..
-      - cmake -DCMAKE_BUILD_TYPE=Debug ..      &&
+      - cmake -DCMAKE_BUILD_TYPE=Debug ..     &&
         cmake --build . -j 2 --config "Debug"
 
   # Windows build and test. Windows support is currently in beta on Travis.
