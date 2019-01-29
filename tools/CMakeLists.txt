@@ -1,4 +1,3 @@
-
 find_package(CppCheck)
 find_package(Shellcheck)
 find_package(CMakeFormat)
