@@ -125,8 +125,10 @@ matrix:
     os: windows
     env:
       #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
+      - MATRIX_EVAL="CC=gcc && CXX=g++"
+    before_install:
+      - eval "${MATRIX_EVAL}"
     install:
-      - gcc --version
       - choco install python3
       - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
       - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
