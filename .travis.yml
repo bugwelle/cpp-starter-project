@@ -48,7 +48,8 @@ matrix:
   - name: "clang-tidy linting"
     stage: check
     language: cpp
-    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
+    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-7', clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
+    env: CC=clang-7 && CXX=clang++-7
     install:
       - pip3 install conan
     before_script:
