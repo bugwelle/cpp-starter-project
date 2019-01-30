@@ -51,8 +51,10 @@ matrix:
     addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
     install:
       - pip3 install conan
+    before_script:
+      - cd tools
     script:
-      - ./tools/build_run_clang_tidy.sh
+      - ./build_run_clang_tidy.sh
       - git diff --diff-filter=M --color | cat
       - git diff --diff-filter=M --quiet || (echo "Found fixable errors! Use clang-tidy!"; exit 1)
 
