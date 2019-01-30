@@ -4,9 +4,11 @@ clone_folder: c:\projects\source
 environment:
   matrix:
   - platform: mingw
-    generator: MinGW Makefiles
+    generator: "MinGW Makefiles"
   - platform: amd64
-    generator: NMake Makefiles
+    generator: "NMake Makefiles"
+  - platform: amd64
+    generator: "Visual Studio 15 2017"
 
 init:
   - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
@@ -22,7 +24,7 @@ before_build:
   - cmd: set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
 
 build_script:
-  - cmd: if %platform%==mingw set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0
+  - cmd: if %platform%==mingw set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0;%PATH%
   - cmd: mkdir build
   - cmd: cd build
   - cmd: conan install ..
