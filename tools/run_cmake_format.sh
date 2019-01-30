@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 ###############################################################################
 # Run cmake-format on all CMake files (for usage in CIs)

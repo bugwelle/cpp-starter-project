@@ -8,3 +8,7 @@ other tools that may be useful to a project developer.
 I like bash scripts. That's why you'll find quite a few in this directory.
 We could of course use CMake's custom targets to run e.g. cppcheck but
 I didn't have time for that, yet. :-)
+
+We use the "unofficial bash strict mode" in our bash scripts to avoid
+having to debug them more than necessary.  
+See: http://redsymbol.net/articles/unofficial-bash-strict-mode/

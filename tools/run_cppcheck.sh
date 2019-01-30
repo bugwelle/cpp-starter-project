@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 ###############################################################################
 # Run cppcheck on all sources (for usage in CIs)

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 cd "$( cd "$(dirname "$0")"; pwd -P )/.."
 
