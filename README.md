@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/97a0c791b34a4c8fa1fd10bc6c103865)](https://app.codacy.com/app/bugwelle/cpp-starter-project?utm_source=github.com&utm_medium=referral&utm_content=bugwelle/cpp-starter-project&utm_campaign=Badge_Grade_Settings)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Travis CI Build Status](https://img.shields.io/travis/pipeline/bugwelle/cpp-starter-project/master.svg?logo=travis)](https://travis-ci.org/bugwelle/cpp-starter-project)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/j56v8bgwtk24tuu9?svg=true)](https://ci.appveyor.com/project/archer96/cpp-starter-project)
