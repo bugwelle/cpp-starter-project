@@ -29,20 +29,20 @@ Following features are included:
  - [x] project structure common to C++ projects (similar to [pitchfork][pf])
  - [x] modern C++ (currently C++17)
  - [x] modern CMake >= 3.12
-   (no more `include_directories(...)` or `link_libraries(...)`)
+     (no more `include_directories(...)` or `link_libraries(...)`)
  - [x] testing framework ([Catch2][catch2])
  - [x] user documentation using [Doxygen][doxygen] and [Sphinx][sphinx]
  - [x] documentation using [Doxygen][doxygen] and [Sphinx][sphinx]
  - [x] [GitHub Pages][ghpages] on `gh-pages` branch
  - [x] code formatting because no one has got time for that in code reviews
      ([`clang-format`][clangfmt] and [`cmake-format`][cmakefmt])
- - [ ] static code analysis tools like linters
+ - [x] static code analysis tools like linters
      ([`cppcheck`](cppcheck), [`clang-tidy`][clangtidy], [`shellcheck`][shcheck])
  - [x] continuous integration: useful not only for pull requests
      ([Travis CI][travis], [AppVeyor][appveyor], [GitLab CI][gitlabci])
  - [ ] continuous deployment
      ([Bintray][bintray]), [GitHub Pages][githubpg])
- - [ ] code coverage using [Coveralls][coveralls]
+ - [x] code coverage using [Codecov][codecov]
  - [x] third-party package management using [conan][conan]
  - [ ] CPack script for packaging
 
@@ -111,8 +111,8 @@ Because we use range-v3 and other modern C++ features, we only support these com
 [clangtidy]: https://clang.llvm.org/extra/clang-tidy/
 [cmake]:     https://cmake.org/
 [cmakefmt]:  https://github.com/cheshirekow/cmake_format
+[codecov]:   https://codecov.io/
 [conan]:     https://conan.io/
-[coveralls]: https://coveralls.io/
 [cppcheck]:  http://cppcheck.sourceforge.net/
 [doxygen]:   http://www.doxygen.nl/
 [ghpages]:   https://bugwelle.github.io/cpp-starter-project/

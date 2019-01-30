@@ -45,17 +45,16 @@ matrix:
       - git diff --diff-filter=M --color | cat
       - git diff --diff-filter=M --quiet || (echo "Found unformatted CMakeLists.txt! Use cmake-format!"; exit 1)
 
-# TODO
-#  - name: "clang-tidy linting"
-#    stage: check
-#    language: cpp
-#    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
-#    install:
-#      - pip3 install conan
-#    script:
-#      - ./tools/build_run_clang_tidy.sh
-#      - git diff --diff-filter=M --color | cat
-#      - git diff --diff-filter=M --quiet || (echo "Found fixable errors! Use clang-tidy!"; exit 1)
+  - name: "clang-tidy linting"
+    stage: check
+    language: cpp
+    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
+    install:
+      - pip3 install conan
+    script:
+      - ./tools/build_run_clang_tidy.sh
+      - git diff --diff-filter=M --color | cat
+      - git diff --diff-filter=M --quiet || (echo "Found fixable errors! Use clang-tidy!"; exit 1)
 
   - name: "cppcheck linting"
     stage: check
