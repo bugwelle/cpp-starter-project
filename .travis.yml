@@ -130,8 +130,10 @@ matrix:
       - conan user
     script:
       - conan install ..
-      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MSYS Makefiles" ..      &&
-        cmake --build . -j 2 --config "Debug"  &&
+      - echo "CC=$CC"
+      - echo "CXX=$CXX"
+      - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX .. &&
+        cmake --build . -j 2 --config "Debug"                                              &&
         ctest -j2
 
   #----------------------------------------------------------------------------
