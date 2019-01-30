@@ -58,6 +58,8 @@ This project was inspired by:
  - https://github.com/richelbilderbeek/travis_cpp_tutorial
  - https://github.com/codecov/example-cpp11-cmake
  - https://github.com/cginternals/cmake-init
+ - https://github.com/LearningByExample/ModernCppCI
+   (https://juan-medina.com/2017/07/01/moderncppci/)
 
 
 ## Documentation
