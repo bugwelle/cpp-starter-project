@@ -22,7 +22,8 @@ set_source_files_properties(main.cpp PROPERTIES COTIRE_EXCLUDED ON)
 # If ENABLE_COVERAGE is set, generate a coverage report for this test.
 generate_coverage_report(cpp_test)
 
-# CMake test target
-add_test(NAME CppTest COMMAND cpp_test)
+# Let Catch2 find all tests so that CTest can list all tests instead of just one
+# executable.
+catch_discover_tests(cpp_test)
 
 use_cotire(cpp_test)

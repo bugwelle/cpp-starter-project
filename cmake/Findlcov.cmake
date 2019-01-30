@@ -5,6 +5,9 @@
 
 include(FindPackageHandleStandardArgs)
 
+# find gcov as it is used by lcov
+find_package(gcov)
+
 # work around CMP0053, see http://public.kitware.com/pipermail/cmake/2014-November/059117.html
 set(PROGRAMFILES_x86_ENV "PROGRAMFILES(x86)")
 

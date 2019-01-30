@@ -93,6 +93,10 @@ add_subdirectory(external) # third-party targets (e.g. interface targets for
 add_subdirectory(src)
 add_subdirectory(tools) # Tools like cppcheck and cmake-format
 
+# -----------------------------------------------------------------------------
+# Tests using Catch2 and CTest
 include(CTest)
-enable_testing()
+include(Catch)
+enable_testing() # Per CMake documentation, enable_testing() must be called in
+                 # the root directory.
 add_subdirectory(tests)
