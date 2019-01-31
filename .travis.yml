@@ -48,8 +48,8 @@ matrix:
   - name: "clang-tidy linting"
     stage: check
     language: cpp
-    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-7', clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
-    env: CC=clang-7 && CXX=clang++-7
+    addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-7', 'clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
+    env: CC=clang-7 CXX=clang++-7
     install:
       - pip3 install conan
     before_script:
@@ -93,7 +93,7 @@ matrix:
     stage: test
     addons: &gcc7
       apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-7', 'lcov', 'python3-setuptools', 'python3-pip'] }
-    env: CC=gcc-7 && CXX=g++-7
+    env: CC=gcc-7 CXX=g++-7
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
       - pip3 install conan
@@ -102,7 +102,7 @@ matrix:
   - name: "linux build with GCC 8"
     stage: test
     addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-8', 'python3-setuptools', 'python3-pip'] } }
-    env: CC=gcc-8 && CXX=g++-8
+    env: CC=gcc-8 CXX=g++-8
     install:
       - pip3 install conan
       - conan user
@@ -142,7 +142,7 @@ matrix:
   - name: "linux coverage run"
     stage: coverage
     addons: *gcc7
-    env: CC=gcc-7 && CXX=g++-7
+    env: CC=gcc-7 CXX=g++-7
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
       - pip3 install conan
