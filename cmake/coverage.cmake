@@ -2,7 +2,7 @@
 # init/blob/master/cmake/Coverage.cmake Modified
 include(${CMAKE_CURRENT_LIST_DIR}/Gcov.cmake)
 
-set(COVERAGE_ENABLED OFF)
+set(COVERAGE_ENABLED OFF BOOL)
 
 set(
   LCOV_EXCLUDE_COVERAGE
@@ -17,16 +17,15 @@ set(
 # Function to register a target for enabled coverage report. Use this function
 # on test executables.
 function(generate_coverage_report target)
-  if(NOT TARGET coverage)
-    add_custom_target(coverage)
-
-    set_target_properties(
-      coverage
-      PROPERTIES FOLDER "Maintenance" EXCLUDE_FROM_DEFAULT_BUILD 1
-    )
-  endif()
-
   if(${COVERAGE_ENABLED})
+    if(NOT TARGET coverage)
+      add_custom_target(coverage)
+
+      set_target_properties(
+        coverage
+        PROPERTIES FOLDER "Maintenance" EXCLUDE_FROM_DEFAULT_BUILD 1
+      )
+    endif()
     generate_lcov_report(coverage-${target} ${target} ${ARGN})
     add_dependencies(coverage coverage-${target})
   endif()
@@ -61,25 +60,19 @@ function(target_enable_coverage target)
     return()
   endif()
 
-  if(COVERAGE_ENABLED)
+  if(${COVERAGE_ENABLED})
     if(
       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
       OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"
     )
-      target_compile_options(
-        ${target}
-        PRIVATE -g -fprofile-arcs -ftest-coverage --coverage
-      )
+      target_compile_options(${target} PRIVATE -g --coverage)
     endif()
 
     if(
       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
       OR "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux"
     )
-      target_link_libraries(
-        ${target}
-        INTERFACE -g -fprofile-arcs -ftest-coverage --coverage
-      )
+      target_link_libraries(${target} INTERFACE -g --coverage)
     endif()
 
   endif()
