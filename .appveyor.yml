@@ -27,7 +27,6 @@ before_build:
 build_script:
   - cmd: mkdir build
   - cmd: cd build
-  - cmd: conan install ..
   - cmd: cmake -G "%generator%" -DCMAKE_BUILD_TYPE=Debug ..
   - cmd: cmake --build . --config "Debug"
 

@@ -37,7 +37,6 @@ build_project_release:
   stage: build
   script:
     - mkdir build && cd $_
-    - conan install ..
     - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$(which g++-8) ..
     - make -j2 cpp_starter
 
@@ -47,7 +46,6 @@ run_unit_tests:
     - echo "GCC8 $(which g++-8)"
     - echo $CXX
     - mkdir build && cd $_
-    - conan install ..
-    - cmake -DCMAKE_CXX_COMPILER=$(which g++-8) ..
+    - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=$(which g++-8) ..
     - make -j2 cpp_test
     - make test

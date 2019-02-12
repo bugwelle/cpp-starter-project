@@ -9,7 +9,8 @@ but I've choosen conan because I like it. :-)
 ## How do I use it?
  1. [install conan](https://docs.conan.io/en/latest/installation.html#install-with-pip-recommended)
  2. create a build directory (`mkdir build && cd $_`)
- 3. install the project's dependencies (`conan install ..`)
+ 3. run cmake with a build type (`cmake -DCMAKE_BUILD_TYPE=Debug ..`) as this will
+    also install all dependencies using conan
 
 That's it for this project. Some tips about a few problems I had:
 

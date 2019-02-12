@@ -47,7 +47,7 @@ matrix:
 
   - name: "clang-tidy linting"
     stage: check
-    language: cpp
+    language: minimal
     addons: { apt: { sources: ['llvm-toolchain-xenial-7'], packages: ['clang-7', 'clang-tidy-7', 'python3-setuptools', 'python3-pip'] } }
     env: CC=clang-7 CXX=clang++-7
     install:
@@ -163,7 +163,6 @@ before_script:
   - mkdir build && cd $_
 
 script:
-  - conan install ..
   - cmake -DCMAKE_BUILD_TYPE=Debug ..            &&
     cmake --build . -j $(nproc) --config "Debug" &&
     ctest -j2
