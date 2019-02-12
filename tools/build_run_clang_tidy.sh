@@ -12,5 +12,7 @@ echo "Building with clang-tidy and applying fixes"
 mkdir -p build
 rm -rf build/*
 cd build
-cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+cmake -DCMAKE_BUILD_TYPE=Debug \
+    -DENABLE_COTIRE=OFF \
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
 python3 /usr/lib/llvm-*/share/clang/run-clang-tidy.py -fix ../src
