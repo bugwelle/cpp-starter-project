@@ -2,6 +2,12 @@
 
 List of all modules and third party licenses that are used in this project.
 
+`conan.cmake`
+ - from Conan project
+ - Website: https://github.com/conan-io/cmake-conan
+ - License: [MIT License](https://github.com/conan-io/cmake-conan/blob/develop/LICENSE)
+ - Version v0.13 (git tag)
+
 `warnings.cmake`
 `FindShellcheck.cmake`
 `FindCMakeFormat.cmake`

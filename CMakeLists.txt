@@ -43,8 +43,18 @@ include(coverage) # for lcov and gcov code coverage
 include(clang-tidy)
 
 # Package Manager includes
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
+include(conan)
+
+conan_cmake_run(
+  CONANFILE
+  conanfile.txt
+  BASIC_SETUP # Conan Basic Setup
+  NO_OUTPUT_DIRS # Don't mess with CMake's default build structure
+  PROFILE_AUTO # Use CMake Compiler settings
+  CMAKE_TARGETS # Use CMake targets
+  BUILD
+  missing
+)
 
 # -----------------------------------------------------------------------------
 # Get git revision
@@ -59,8 +69,8 @@ activate_coverage(ENABLE_COVERAGE)
 # -----------------------------------------------------------------------------
 # Some defaults for our targets. Currently warnings are enabled and the C++
 # standard is set to C++17. It simplifies handling multiple targets like
-# different libraries without having to repeat all compile-features, etc.
-# Call this function after *all* targets have been added to ${target}!
+# different libraries without having to repeat all compile-features, etc. Call
+# this function after *all* targets have been added to ${target}!
 function(set_post_target_defaults target)
   if(NOT TARGET ${target})
     message(WARNING "cpp-starter defaults: ${target} is not a target.")

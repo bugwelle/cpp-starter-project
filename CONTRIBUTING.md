@@ -49,7 +49,7 @@ make test         # Run all tests (`ctest` works as well)
 ```sh
 cd cpp-starter-project
 mkdir build && cd $_
-conan install .. # Install third party dependencies
+# Also installs third party dependencies using conan
 cmake -DCMAKE_BUILD_TYPE=Debug ..
 make -j$(nproc)
 ```
@@ -61,7 +61,6 @@ cd cpp-starter-project
 mkdir build
 cd build
 conan user
-conan install .. # Install third party dependencies
 cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 15 2017 Win64" .. # or "MinGW Makefiles"
 cmake --build . --config "Debug"
 ```
