@@ -60,7 +60,8 @@ activate_coverage(ENABLE_COVERAGE)
 # Some defaults for our targets. Currently warnings are enabled and the C++
 # standard is set to C++17. It simplifies handling multiple targets like
 # different libraries without having to repeat all compile-features, etc.
-function(set_target_defaults target)
+# Call this function after *all* targets have been added to ${target}!
+function(set_post_target_defaults target)
   if(NOT TARGET ${target})
     message(WARNING "cpp-starter defaults: ${target} is not a target.")
     return()
@@ -76,11 +77,6 @@ function(set_target_defaults target)
   enable_warnings(${target})
   target_enable_coverage(${target})
   add_sanitizers(${target})
-endfunction()
-
-# Adapter function for cotire(). Applies cotire if ENABLE_COTIRE is ON. Useful
-# for running tests to avoid unity and pch targets.
-function(use_cotire target)
   if(ENABLE_COTIRE)
     cotire(${target})
   endif()

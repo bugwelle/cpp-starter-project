@@ -2,7 +2,6 @@
 # Tests
 
 add_executable(cpp_test)
-set_target_defaults(cpp_test)
 target_include_directories(cpp_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(cpp_test PRIVATE CONAN_PKG::Catch2 cpp_starter_math)
 
@@ -26,4 +25,4 @@ generate_coverage_report(cpp_test)
 # executable.
 catch_discover_tests(cpp_test)
 
-use_cotire(cpp_test)
+set_post_target_defaults(cpp_test)
