@@ -94,17 +94,18 @@ matrix:
   - name: "linux build with GCC 8"
     stage: test
     addons: &gcc8
-      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-8', 'g++-8', 'lcov', 'python3-setuptools', 'python3-pip'] }
+      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-8', 'g++-8', 'python3-setuptools', 'python3-pip'] }
     env: CC=gcc-8 CXX=g++-8
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
       - pip3 install conan
       - conan user
 
-  - name: "linux build with GCC 8"
+  - name: "linux build with GCC 7"
     stage: test
-    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-8', 'g++-8', 'python3-setuptools', 'python3-pip'] } }
-    env: CC=gcc-8 CXX=g++-8
+    addons: &gcc7
+      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-7', 'g++-7', 'python3-setuptools', 'python3-pip'] }
+    env: CC=gcc-7 CXX=g++-7
     install:
       - pip3 install conan
       - conan user
@@ -148,6 +149,11 @@ matrix:
     env: CC=gcc-8 CXX=g++-8
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
+      # lcov stable does not yet support GCC 8
+      - git clone https://github.com/linux-test-project/lcov.git &&
+        ( cd lcov && sudo make install )
+      # gcov-8 is installed but not the default
+      - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-8 10
       - pip3 install conan
       - conan user
     script:
