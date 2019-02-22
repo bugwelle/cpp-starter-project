@@ -75,7 +75,7 @@ cmake --build . -j 2
 ctest .
 
 # Create coverage
-cmake -ENABLE_COVERAGE:BOOL=ON ..
+cmake -DENABLE_COVERAGE:BOOL=ON ..
 cmake --build . -j 2 -- coverage
 ```
 

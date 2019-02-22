@@ -1,5 +1,5 @@
-# Defaults
-language: cpp
+# Use minimal image as base to avoid overriding environment variables.
+language: minimal
 os: linux
 dist: xenial
 
@@ -47,7 +47,6 @@ matrix:
 
   - name: "clang-tidy linting"
     stage: check
-    language: minimal
     addons:
       apt:
         sources: ['llvm-toolchain-xenial-7', 'ubuntu-toolchain-r-test']
@@ -65,7 +64,6 @@ matrix:
 
   - name: "cppcheck linting"
     stage: check
-    language: minimal
     addons: { apt: { packages: ['cppcheck'] } }
     before_script:
       - cppcheck --version
@@ -96,7 +94,7 @@ matrix:
   - name: "linux build with GCC 8"
     stage: test
     addons: &gcc8
-      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-8', 'lcov', 'python3-setuptools', 'python3-pip'] }
+      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-8', 'g++-8', 'lcov', 'python3-setuptools', 'python3-pip'] }
     env: CC=gcc-8 CXX=g++-8
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
@@ -105,7 +103,7 @@ matrix:
 
   - name: "linux build with GCC 8"
     stage: test
-    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-8', 'python3-setuptools', 'python3-pip'] } }
+    addons: { apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-8', 'g++-8', 'python3-setuptools', 'python3-pip'] } }
     env: CC=gcc-8 CXX=g++-8
     install:
       - pip3 install conan
@@ -116,6 +114,7 @@ matrix:
   - name: "Windows GCC builds"
     stage: test
     os: windows
+    language: cpp
     compiler: gcc
     env:
       #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
