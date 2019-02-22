@@ -27,3 +27,7 @@ at https://gitlab.com/bugwelle/docker-modern-cpp-cmake
 It includes recent versions of GCC and clang, cppcheck and other usefule tools.
 By using custom docker images we could also use the latest C++ features
 available, etc.
+
+## Circle CI
+Circle CI is free for open source projects. We use Circle CI's version 2
+format.

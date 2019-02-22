@@ -5,22 +5,189 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+
+  checkout-code:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: debian:stretch
+    steps:
+      - checkout
+      - save_cache:
+          key: repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/project
+
+  cppcheck:
+    docker:
+      - image: debian:stretch
+    steps:
+      - restore_cache:
+          key: repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  shellcheck:
+    docker:
+      - image: koalaman/shellcheck-alpine:stable
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Check Shell Scripts
+          command: find . -type f -name "*.sh" -exec shellcheck -e SC2010 -e SC2016 {} \+
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  cmake-format:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  clang-tidy:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  build-gcc-7:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  build-gcc-8:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  build-clang-7:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  unit-test:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  integration-test:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  unit-test-asan:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+  coverage:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+
+
 workflows:
-  say-hello-workflow:
+  version: 2
+  check_build_test:
     jobs:
-      - say-hello
+      - checkout-code
+      - cppcheck:
+          requires:
+            - checkout-code
+      - shellcheck:
+          requires:
+            - checkout-code
+      - cmake-format:
+          requires:
+            - checkout-code
+      - clang-tidy:
+          requires:
+            - checkout-code
+      - build-gcc-7:
+          requires:
+            - cppcheck
+            - shellcheck
+            - cmake-format
+      - build-gcc-8:
+          requires:
+            - cppcheck
+            - shellcheck
+            - cmake-format
+      - build-clang-7:
+          requires:
+            - cppcheck
+            - shellcheck
+            - cmake-format
+      - unit-test:
+          requires:
+            - build-gcc-8
+      - integration-test:
+          requires:
+            - build-gcc-8
+      - unit-test-asan:
+          requires:
+            - build-clang-7
+      - coverage:
+          requires:
+            - unit-test
