@@ -50,9 +50,9 @@ matrix:
     language: minimal
     addons:
       apt:
-        sources: ['llvm-toolchain-xenial-7']
+        sources: ['llvm-toolchain-xenial-7', 'ubuntu-toolchain-r-test']
         # install modern gcc for std lib
-        packages: ['clang-7', 'clang-tidy-7', 'g++-7', 'gcc-7', 'python3-setuptools', 'python3-pip']
+        packages: ['clang-7', 'clang-tidy-7', 'g++-8', 'python3-setuptools', 'python3-pip']
     env: CC=clang-7 CXX=clang++-7
     install:
       - pip3 install conan
@@ -90,14 +90,14 @@ matrix:
     #- brew upgrade cmake # Update to latest version
       - pip install conan
 
-  # Linux build and test using gcc-7. Dependencies are installed using the APT
+  # Linux build and test using gcc-8. Dependencies are installed using the APT
   # addon, though "apt-get install ABC" works as well.
   # We need some python packages to install conan.
-  - name: "linux build with GCC 7"
+  - name: "linux build with GCC 8"
     stage: test
-    addons: &gcc7
-      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-7', 'lcov', 'python3-setuptools', 'python3-pip'] }
-    env: CC=gcc-7 CXX=g++-7
+    addons: &gcc8
+      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['g++-8', 'lcov', 'python3-setuptools', 'python3-pip'] }
+    env: CC=gcc-8 CXX=g++-8
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
       - pip3 install conan
@@ -145,14 +145,13 @@ matrix:
   # We need some python packages to install conan.
   - name: "linux coverage run"
     stage: coverage
-    addons: *gcc7
-    env: CC=gcc-7 CXX=g++-7
+    addons: *gcc8
+    env: CC=gcc-8 CXX=g++-8
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
       - pip3 install conan
       - conan user
     script:
-      - conan install ..
       - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COTIRE=OFF -DENABLE_COVERAGE=ON &&
         make -j$(nproc)                                                            &&
         make coverage
