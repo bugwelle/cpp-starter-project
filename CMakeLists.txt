@@ -9,7 +9,7 @@ project(
     DESCRIPTION
     "C++ Starter Project"
     HOMEPAGE_URL
-    "https://gitlab.com/bugwelle/cpp-starter-project"
+    "https://github.com/bugwelle/cpp-starter-project"
   LANGUAGES CXX
 )
 
