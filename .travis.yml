@@ -47,10 +47,10 @@ matrix:
     stage: check
     addons:
       apt:
-        sources: ['llvm-toolchain-xenial-7', 'ubuntu-toolchain-r-test']
+        sources: ['llvm-toolchain-xenial-8', 'ubuntu-toolchain-r-test']
         # install modern gcc for std lib
-        packages: ['clang-7', 'clang-tidy-7', 'g++-8', 'python3-setuptools', 'python3-pip']
-    env: CC=clang-7 CXX=clang++-7
+        packages: ['clang-8', 'clang-tidy-8', 'g++-8', 'python3-setuptools', 'python3-pip']
+    env: CC=clang-8 CXX=clang++-8
     install:
       - pip3 install conan
     before_script:
