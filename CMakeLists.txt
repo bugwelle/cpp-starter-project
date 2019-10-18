@@ -4,12 +4,9 @@ cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
 project(
   cpp_starter
-  VERSION
-    0.1.0
-    DESCRIPTION
-    "C++ Starter Project"
-    HOMEPAGE_URL
-    "https://github.com/bugwelle/cpp-starter-project"
+  VERSION 0.1.0
+  DESCRIPTION "C++ Starter Project"
+  HOMEPAGE_URL "https://github.com/bugwelle/cpp-starter-project"
   LANGUAGES CXX
 )
 
@@ -81,8 +78,7 @@ function(set_post_target_defaults target)
   # https://cmake.org/cmake/help/latest/prop_tgt/FOLDER.html
   set_target_properties(${target} PROPERTIES FOLDER "${PROJECT_NAME}")
   target_include_directories(
-    ${target}
-    PUBLIC ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src
+    ${target} PUBLIC ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src
   )
   enable_warnings(${target})
   target_enable_coverage(${target})

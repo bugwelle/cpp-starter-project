@@ -10,7 +10,8 @@ namespace CppStarter::Math {
  * @param nums nth's fibonacci number
  */
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-[[nodiscard]] T fibonacci(T num) {
+[[nodiscard]] T fibonacci(T num)
+{
     if (num == 0) {
         return 0;
     }

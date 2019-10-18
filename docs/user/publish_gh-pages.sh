@@ -19,7 +19,7 @@ sphinx-build -M html source build
 
 # create or use orphaned gh-pages branch
 branch_name=gh-pages
-if [ $(git branch --list "$branch_name") ]; then
+if [ "$(git branch --list "$branch_name")" ]; then
     git stash
     git checkout $branch_name
     git pull origin $branch_name

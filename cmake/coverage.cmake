@@ -4,14 +4,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/Gcov.cmake)
 
 set(COVERAGE_ENABLED OFF BOOL)
 
-set(
-  LCOV_EXCLUDE_COVERAGE
-  ${LCOV_EXCLUDE_COVERAGE}
-  "\"*/googletest/*\""
-  "\"*v1*\""
-  "\"/usr/*\""
-  "\"*/external/*\""
-  "\"*/third_party/*\""
+set(LCOV_EXCLUDE_COVERAGE
+    ${LCOV_EXCLUDE_COVERAGE} "\"*/googletest/*\"" "\"*v1*\"" "\"/usr/*\""
+    "\"*/external/*\"" "\"*/third_party/*\""
 )
 
 # Function to register a target for enabled coverage report. Use this function
@@ -22,8 +17,7 @@ function(generate_coverage_report target)
       add_custom_target(coverage)
 
       set_target_properties(
-        coverage
-        PROPERTIES FOLDER "Maintenance" EXCLUDE_FROM_DEFAULT_BUILD 1
+        coverage PROPERTIES FOLDER "Maintenance" EXCLUDE_FROM_DEFAULT_BUILD 1
       )
     endif()
     generate_lcov_report(coverage-${target} ${target} ${ARGN})
@@ -35,7 +29,10 @@ endfunction()
 # target_enable_coverage
 function(activate_coverage status)
   if(NOT ${status})
-    set(COVERAGE_ENABLED ${status} PARENT_SCOPE)
+    set(COVERAGE_ENABLED
+        ${status}
+        PARENT_SCOPE
+    )
     message(STATUS "Coverage lcov skipped: Manually disabled")
     return()
   endif()
@@ -43,12 +40,18 @@ function(activate_coverage status)
   find_package(lcov)
 
   if(NOT lcov_FOUND)
-    set(COVERAGE_ENABLED OFF PARENT_SCOPE)
+    set(COVERAGE_ENABLED
+        OFF
+        PARENT_SCOPE
+    )
     message(STATUS "Coverage lcov skipped: lcov not found")
     return()
   endif()
 
-  set(COVERAGE_ENABLED ${status} PARENT_SCOPE)
+  set(COVERAGE_ENABLED
+      ${status}
+      PARENT_SCOPE
+  )
   message(STATUS "Coverage report enabled")
 endfunction()
 
@@ -61,16 +64,14 @@ function(target_enable_coverage target)
   endif()
 
   if(${COVERAGE_ENABLED})
-    if(
-      "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
-      OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}"
+                                                    STREQUAL "Clang"
     )
       target_compile_options(${target} PRIVATE -g --coverage)
     endif()
 
-    if(
-      "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
-      OR "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux"
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_SYSTEM_NAME}"
+                                                    STREQUAL "Linux"
     )
       target_link_libraries(${target} INTERFACE -g --coverage)
     endif()

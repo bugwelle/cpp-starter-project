@@ -17,9 +17,8 @@ else()
   # preferable to use CXX_CPPCHECK.
   add_custom_target(
     cppcheck
-    COMMAND
-      ${CPPCHECK_EXE} -j2
-      --enable=all -I${CMAKE_SOURCE_DIR}/src -j1 ${CMAKE_SOURCE_DIR}/src
+    COMMAND ${CPPCHECK_EXE} -j2 --enable=all -I${CMAKE_SOURCE_DIR}/src -j1
+            ${CMAKE_SOURCE_DIR}/src
     COMMENT "format cmake files"
   )
 endif()
