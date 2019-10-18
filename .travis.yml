@@ -27,7 +27,7 @@ matrix:
     language: shell
     script:
     - shellcheck --version
-    - find . ! -path "./build/*" -type f -name "*.sh" -exec shellcheck {} \+
+    - ./tools/run_shellcheck.sh
 
   - name: "cmake-format check"
     stage: check

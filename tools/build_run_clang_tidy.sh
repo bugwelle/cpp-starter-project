@@ -6,8 +6,9 @@ IFS=$'\n\t'
 SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 cd "${SCRIPT_PATH}/.."
+source tools/utils.sh
 
-echo "Building with clang-tidy and applying fixes"
+print_info "Building with clang-tidy and applying fixes"
 
 mkdir -p build
 rm -rf build/*

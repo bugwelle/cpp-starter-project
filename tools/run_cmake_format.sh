@@ -9,8 +9,12 @@ IFS=$'\n\t'
 ###############################################################################
 
 cd "$( cd "$(dirname "$0")"; pwd -P )/.."
+source tools/utils.sh
 
-echo "Run cmake-format on all CMake files"
+print_info "Run cmake-format on all CMake files"
 find . -type f \
+    ! -path "./build/*" \
+    ! -name 'cotire.cmake' \
+    ! -name 'conan.cmake' \
     \( -name "CMakeLists.txt" -o -name "*.cmake" \) \
     -exec cmake-format -c .cmake-format -i  {} +

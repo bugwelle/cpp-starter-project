@@ -9,6 +9,7 @@ IFS=$'\n\t'
 ###############################################################################
 
 cd "$( cd "$(dirname "$0")"; pwd -P )/.."
+source tools/utils.sh
 
-echo "Run cppcheck on all source files"
+print_info "Run cppcheck on all source files"
 cppcheck --enable=all --error-exitcode=1 -Isrc -j2 ./src
