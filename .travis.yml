@@ -26,8 +26,8 @@ matrix:
     stage: check
     language: shell
     script:
-    - shellcheck --version
-    - ./tools/run_shellcheck.sh
+      - shellcheck --version
+      - ./tools/run_shellcheck.sh
 
   - name: "cmake-format check"
     stage: check
