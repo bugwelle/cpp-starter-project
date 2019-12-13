@@ -1,5 +1,5 @@
 ---
-Checks:                'clang-diagnostic-*,clang-analyzer-*,-*,bugprone-*,clang-*,cert-*,cppcoreguidelines-*,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,google-explicit-constructor,google-global-names-in-headers,google-readability-casting,llvm-*,-llvm-header-guard,-llvm-namespace-comment,misc-*,modernize-*,performance-*,-performance-unnecessary-value-param,readability-*,-cert-err58-cpp,-clang-analyzer-core.uninitialized.UndefReturn,-cppcoreguidelines-avoid-c-arrays,-cppcoreguidelines-avoid-magic-numbers,-cert-dcl16-c'
+Checks:                'clang-diagnostic-*,clang-analyzer-*,-*,bugprone-*,clang-*,cert-*,cppcoreguidelines-*,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,google-explicit-constructor,google-global-names-in-headers,google-readability-casting,llvm-*,-llvm-header-guard,-llvm-namespace-comment,misc-*,modernize-*,performance-*,-performance-unnecessary-value-param,readability-*,-cert-err58-cpp,-clang-analyzer-core.uninitialized.UndefReturn,-cppcoreguidelines-avoid-c-arrays,-cppcoreguidelines-avoid-magic-numbers,-cert-dcl16-c,-readability-uppercase-literal-suffix'
 WarningsAsErrors:      ''
 AnalyzeTemporaryDtors: false
 FormatStyle:           file
