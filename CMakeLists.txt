@@ -24,7 +24,7 @@ option(ENABLE_COTIRE           "Disable cotire."                              OF
 
 # -----------------------------------------------------------------------------
 # CMake modules and other cmake related (third-party) scripts
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # for Thread/Address/Memory/UB Sanitizers
 find_package(Sanitizers)
