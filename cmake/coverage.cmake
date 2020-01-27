@@ -73,7 +73,7 @@ function(target_enable_coverage target)
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_SYSTEM_NAME}"
                                                     STREQUAL "Linux"
     )
-      target_link_libraries(${target} INTERFACE -g --coverage)
+      target_link_libraries(${target} PRIVATE -g --coverage)
     endif()
 
   endif()
