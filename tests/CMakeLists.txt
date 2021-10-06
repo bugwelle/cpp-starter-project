@@ -7,11 +7,10 @@ target_link_libraries(cpp_test PRIVATE CONAN_PKG::catch2 cpp_starter_math)
 
 target_sources(
   cpp_test
-  PRIVATE
-  main.cpp
-  math/test_fibonacci.cpp # List all test sources here. Prefix your test sources
-                          # with `test_` to avoid name clashes with files in
-                          # `src`.
+  PRIVATE main.cpp
+          math/test_fibonacci.cpp # List all test sources here. Prefix your test
+                                  # sources with `test_` to avoid name clashes
+                                  # with files in `src`.
 )
 
 # Cotire would use a PCH for Catch2 which results in `CATCH_CONFIG_RUNNER` not
