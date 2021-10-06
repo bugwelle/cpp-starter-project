@@ -3,7 +3,7 @@
 
 add_executable(cpp_test)
 target_include_directories(cpp_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(cpp_test PRIVATE CONAN_PKG::Catch2 cpp_starter_math)
+target_link_libraries(cpp_test PRIVATE CONAN_PKG::catch2 cpp_starter_math)
 
 target_sources(
   cpp_test

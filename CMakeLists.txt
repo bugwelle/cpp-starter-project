@@ -72,6 +72,8 @@ activate_coverage(ENABLE_COVERAGE)
 # standard is set to C++20. It simplifies handling multiple targets like
 # different libraries without having to repeat all compile-features, etc. Call
 # this function after *all* targets have been added to ${target}!
+#
+# TODO: Can we now use a target and link against it instead?
 function(set_post_target_defaults target)
   if(NOT TARGET ${target})
     message(WARNING "cpp-starter defaults: ${target} is not a target.")

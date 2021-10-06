@@ -1,5 +1,5 @@
 # conan Package Manager
-We use [conan](https://conan.io/) to manage our C++ deendencies.
+We use [conan](https://conan.io/) to manage our C++ dependencies.
 
 ## Why conan and not X?
 As far as I can tell conan is the most commonly used C++ package manager that
