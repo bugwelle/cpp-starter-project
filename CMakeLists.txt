@@ -1,6 +1,4 @@
-# CMake >= 3.12 has some new features like `HOMEPAGE_URL`. It also supports
-# C++20 using `cxx_std_20` in `target_compile_features`.
-cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(
   cpp_starter
