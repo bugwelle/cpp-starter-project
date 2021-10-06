@@ -9,7 +9,7 @@ constexpr char VersionStr[]  = "@PROJECT_VERSION@";
 constexpr int  VersionMajor  = @PROJECT_VERSION_MAJOR@;
 constexpr int  VersionMinor  = @PROJECT_VERSION_MINOR@;
 constexpr int  VersionPatch  = @PROJECT_VERSION_PATCH@;
-// This project does not specify a teak version
+// This project does not specify a tweak version
 // constexpr int  VersionTweak  = @PROJECT_VERSION_TWEAK@;
 constexpr char Description[] = "@PROJECT_DESCRIPTION@";
 constexpr char Website[]     = "@PROJECT_HOMEPAGE_URL@";
