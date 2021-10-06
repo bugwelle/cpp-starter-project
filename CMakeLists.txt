@@ -38,7 +38,6 @@ if(ENABLE_COTIRE)
   include(cotire) # Used for precompiled headers and other optimizations
 endif()
 include(GenerateExportHeader) # TODO: WHY?
-include(WriteCompilerDetectionHeader) # TODO: Variable RESULT_VARIABLE; Why?
 include(warnings) # custom function that enables compiler warnings
 include(GetGitRevisionDescription)
 include(coverage) # for lcov and gcov code coverage
