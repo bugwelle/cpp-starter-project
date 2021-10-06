@@ -19,7 +19,7 @@ project is not intended for creating libraries.
 ## Why?
 I found many C++ starter projects and even more tutorials that give a
 good introduction into starting new C++ and [CMake][cmake] projects but none
-of them were either up-to-date (speaking C++17 and CMake >= 3.12) or had all
+of them were either up-to-date (speaking C++20 and CMake >= 3.12) or had all
 features that I'd like to have like package managers or continuous integration.
 
 
@@ -28,7 +28,7 @@ This project aims to be a full-fledged entry point for new medium-sized projects
 Following features are included:
 
  - [x] project structure common to C++ projects (similar to [pitchfork][pf])
- - [x] modern C++ (currently C++17)
+ - [x] modern C++ (currently C++20)
  - [x] modern CMake >= 3.12
      (no more `include_directories(...)` or `link_libraries(...)`)
  - [x] testing framework ([Catch2][catch2])

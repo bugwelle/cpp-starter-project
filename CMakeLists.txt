@@ -69,7 +69,7 @@ activate_coverage(ENABLE_COVERAGE)
 
 # -----------------------------------------------------------------------------
 # Some defaults for our targets. Currently warnings are enabled and the C++
-# standard is set to C++17. It simplifies handling multiple targets like
+# standard is set to C++20. It simplifies handling multiple targets like
 # different libraries without having to repeat all compile-features, etc. Call
 # this function after *all* targets have been added to ${target}!
 function(set_post_target_defaults target)
@@ -77,7 +77,7 @@ function(set_post_target_defaults target)
     message(WARNING "cpp-starter defaults: ${target} is not a target.")
     return()
   endif()
-  target_compile_features(${target} PUBLIC cxx_std_17)
+  target_compile_features(${target} PUBLIC cxx_std_20)
   # We want a better project structure in some IDEs like Visual Studio. See
   # https://cmake.org/cmake/help/latest/prop_tgt/FOLDER.html
   set_target_properties(${target} PROPERTIES FOLDER "${PROJECT_NAME}")
