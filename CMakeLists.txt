@@ -26,6 +26,11 @@ option(ENABLE_COTIRE           "Disable cotire."                              OF
 # CMake modules and other cmake related (third-party) scripts
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
+include(MiscFunctions)
+check_no_in_source_build()
+# conan requires that CMAKE_BUILD_TYPE is set.  If none is set, use this default.
+set_default_build_type("RelWithDebInfo")
+
 # for Thread/Address/Memory/UB Sanitizers
 find_package(Sanitizers)
 
