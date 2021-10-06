@@ -1,7 +1,7 @@
 # Use minimal image as base to avoid overriding environment variables.
 language: minimal
 os: linux
-dist: xenial
+dist: focal
 
 stages:
 - check
@@ -25,14 +25,15 @@ matrix:
   - name: "shellcheck linting"
     stage: check
     language: shell
-    script:
+    before_script:
       - shellcheck --version
+    script:
       - ./tools/run_shellcheck.sh
 
   - name: "cmake-format check"
     stage: check
     language: python
-    python: ['3.6']
+    python: ['3.8']
     addons: { apt: { packages: ['python3-setuptools', 'python3-pip'] } }
     install:
       - pip install cmake_format
@@ -45,14 +46,13 @@ matrix:
 
   - name: "clang-tidy linting"
     stage: check
-    addons:
-      apt:
-        sources: ['llvm-toolchain-xenial-7', 'ubuntu-toolchain-r-test']
+    env: CC=clang-12 CXX=clang++-12
+    before_install:
+      - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         # install modern gcc for std lib
-        packages: ['clang-7', 'clang-tidy-7', 'g++-9', 'python3-setuptools', 'python3-pip']
-    env: CC=clang-7 CXX=clang++-7
+      - sudo apt install clang-12 clang-tidy-12 g++-11 python3-setuptools python3-pip
     install:
-      - pip3 install conan
+      - pip3 install conan cmake
     before_script:
       - cd tools
     script:
@@ -81,56 +81,61 @@ matrix:
     os: osx
     osx_image: xcode10
     compiler: clang
-    addons: { homebrew: { packages: ['cmake'] } }
     install:
-    #- brew upgrade cmake # Update to latest version
-      - pip install conan
+      - pip3 install cmake conan
 
-  # Linux build and test using gcc-9. Dependencies are installed using the APT
+  # Linux build and test using gcc-11. Dependencies are installed using the APT
   # addon, though "apt-get install ABC" works as well.
   # We need some python packages to install conan.
-  - name: "linux build with GCC 9"
+  - name: "linux build with GCC 11"
     stage: test
-    addons: &gcc9
-      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-9', 'g++-9', 'python3-setuptools', 'python3-pip'] }
-    env: CC=gcc-9 CXX=g++-9
-    # See https://docs.conan.io/en/latest/integrations/travisci.html
+    env: CC=gcc-11 CXX=g++-11
+    before_install:
+      - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      - sudo apt install gcc-11 g++-11 python3-setuptools python3-pip
+    # See https://docs.conan.io/en/latest/integrations/ci/travisci.html
     install:
-      - pip3 install conan
+      - pip3 install conan cmake
       - conan user
 
-  - name: "linux build with GCC 7"
+  - name: "linux build with GCC 10"
     stage: test
-    addons: &gcc7
-      apt: { sources: ['ubuntu-toolchain-r-test'], packages: ['gcc-7', 'g++-7', 'python3-setuptools', 'python3-pip'] }
-    env: CC=gcc-7 CXX=g++-7
+    env: CC=gcc-10 CXX=g++-10
+    before_install:
+      - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      - sudo apt install gcc-10 g++-10 python3-setuptools python3-pip
     install:
-      - pip3 install conan
+      - pip3 install conan cmake
       - conan user
 
   # Windows build and test. Windows support is currently in beta on Travis.
   # CMake and MinGw are installed by default.
-  - name: "Windows GCC builds"
-    stage: test
-    os: windows
-    language: cpp
-    compiler: gcc
-    env:
-      #- CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
-    install:
-      - choco install python3
-      - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
-      - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-      - python get-pip.py --user
-      - python -m pip install conan
-      - conan user
-    script:
-      - conan install ..
-      - echo "CC=$CC"
-      - echo "CXX=$CXX"
-      - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" .. &&
-        cmake --build . -j 2                                                                  &&
-        ctest -j2
+  #
+  # TODO: Chocolatey has too many time outs.
+  #
+  # - name: "Windows GCC builds"
+  #   stage: test
+  #   os: windows
+  #   language: cpp
+  #   compiler: gcc
+  #   # env:
+  #   #  - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
+  #   install:
+  #     - choco install python3
+  #     - export PATH="/c/Python310:/c/Python310/Scripts:$PATH"
+  #     - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  #     - python --version
+  #     - ls /c
+  #     - python3 get-pip.py --user
+  #     - python3 -m pip install conan
+  #     - conan user
+  #   script:
+  #     - conan install ..
+  #     - echo "CC=$CC"
+  #     - echo "CXX=$CXX"
+  #     - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" .. &&
+  #       cmake --build . -j 2                                                                  &&
+  #       ctest -j2
 
   #----------------------------------------------------------------------------
   # Coverage Stage
@@ -138,32 +143,28 @@ matrix:
   # report.
   #----------------------------------------------------------------------------
 
-  # Linux coverage build and test executaion using gcc-7. Dependencies are
+  # Linux coverage build and test execution using gcc-11. Dependencies are
   # installed using the APT addon, though "apt-get install ABC" works as well.
   # We need some python packages to install conan.
   - name: "linux coverage run"
     stage: coverage
-    addons: *gcc9
-    env: CC=gcc-9 CXX=g++-9
+    env: CC=gcc-11 CXX=g++-11
+    before_install:
+      - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      - sudo apt install gcc-11 g++-11 python3-setuptools python3-pip
     # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
-      # lcov stable does not yet support GCC 8
+      # I had to many issues with older versions of lcov; use latest
       - git clone https://github.com/linux-test-project/lcov.git &&
         ( cd lcov && sudo make install )
-      # gcov-8 is installed but not the default
-      - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 10
-      - pip3 install conan
+      - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-11 10
+      - pip3 install conan cmake
       - conan user
     script:
       - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COTIRE=OFF -DENABLE_COVERAGE=ON &&
         make -j$(nproc)                                                            &&
         make coverage
       - bash <(curl -s https://codecov.io/bash) -f coverage-filtered.info || echo "Codecov did not collect coverage reports"
-
-  #----------------------------------------------------------------------------
-  # Deploy Stage
-  # TODO
-  #----------------------------------------------------------------------------
 
 before_script:
   - mkdir build && cd $_
