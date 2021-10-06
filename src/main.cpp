@@ -12,7 +12,7 @@
 
 struct CliOptions {
     std::optional<std::string> input_path;
-    std::string command;
+    std::string command{};
     bool print_help = false;
 };
 
