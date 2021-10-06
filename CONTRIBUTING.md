@@ -1,6 +1,7 @@
 # Contributing
 
 ## Project Requirements
+
 This project uses many (modern) tools, so you may need to install quite a lot first.
 
 You need to install:
@@ -18,6 +19,7 @@ Following tools are optional but recommended:
  - [Cppcheck](http://cppcheck.sourceforge.net/)
 
 ### Install Requirements on Ubuntu
+
 These instructions were tested on Ubuntu 18.04:
 
 ```sh
@@ -29,6 +31,7 @@ sudo apt install clang clang++ clang-format clang-tidy
 ```
 
 ## CMake Targets
+
 Following build targets are available:
 
 ```sh
@@ -80,6 +83,7 @@ cmake --build . -j 2 -- coverage
 ```
 
 ## Sanitizers
+
 This project can be build using multiple sanitizers.
 Just pass one of these options to CMake.
 
@@ -93,6 +97,7 @@ CXX=clang++ CC=clang cmake -DSANITIZE_MEMORY=ON ..
 The memory sanitizer is as of now (2018-12-18) only available for clang.
 
 ## Branching policy
+
 Currently, all work is done on the `master` branch.
 For each change that you want to submit by creating a new pull requests,
 please create a new branch that has a meaningful name, e.g. `fix-memory-leak`
