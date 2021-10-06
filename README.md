@@ -23,6 +23,14 @@ of them were either up-to-date (speaking C++20 and CMake >= 3.12) or had all
 features that I'd like to have like package managers or continuous integration.
 
 
+## Documentation
+Documentation about how this starter project is structured and which continuous
+integration services, etc. are used can be found in
+[`docs/cpp-starter`](docs/cpp-starter/README.md).
+
+Generated Sphinx documentation can be found at <https://bugwelle.github.io/cpp-starter-project/>
+
+
 ## Features
 This project aims to be a full-fledged entry point for new medium-sized projects.  
 Following features are included:
@@ -41,8 +49,7 @@ Following features are included:
      ([`cppcheck`](cppcheck), [`clang-tidy`][clangtidy], [`shellcheck`][shcheck])
  - [x] continuous integration: useful not only for pull requests
      ([Travis CI][travis], [AppVeyor][appveyor], [GitLab CI][gitlabci])
- - [ ] continuous deployment
-     ([Bintray][bintray]), [GitHub Pages][githubpg])
+ - [ ] continuous deployment to [GitHub Pages][githubpg]
  - [x] code coverage using [Codecov][codecov]
  - [x] third-party package management using [conan][conan]
  - [ ] CPack script for packaging
@@ -60,14 +67,6 @@ This project was inspired by:
  - https://github.com/cginternals/cmake-init
  - https://github.com/LearningByExample/ModernCppCI
    (https://juan-medina.com/2017/07/01/moderncppci/)
-
-
-## Documentation
-Documentation about how this starter project is structured and which continuous
-integration services, etc. are used can be found in
-[`docs/cpp-starter`](docs/cpp-starter/README.md).
-
-Generated Sphinx documentation can be found at https://bugwelle.github.io/cpp-starter-project/
 
 
 ## License
@@ -108,7 +107,6 @@ Because we use range-v3 and other modern C++ features, we only support these com
    - TODO: GCC
 
 [appveyor]:  https://ci.appveyor.com/project/archer96/cpp-starter-project
-[bintray]:   https//bintray.com/
 [catch2]:    https://github.com/catchorg/Catch2
 [clangfmt]:  https://clang.llvm.org/docs/ClangFormat.html
 [clangtidy]: https://clang.llvm.org/extra/clang-tidy/
