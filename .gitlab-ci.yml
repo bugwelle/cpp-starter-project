@@ -36,16 +36,14 @@ clang_tidy:
 build_project_release:
   stage: build
   script:
-    - echo "GCC9 $(which g++-9)"
-    - mkdir build && cd $_
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$(which g++-9) ..
-    - make -j2 cpp_starter
+    - echo "GCC $(which g++)"
+    - cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$(which g++)
+    - cmake --build build -j 2 --target cpp_test
 
 run_unit_tests:
   stage: test
   script:
-    - echo "GCC9 $(which g++-9)"
-    - mkdir build && cd $_
-    - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=$(which g++-9) ..
-    - make -j2 cpp_test
-    - make test
+    - echo "GCC $(which g++)"
+    - cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=$(which g++)
+    - cmake --build build -j 2 --target cpp_test
+    - cd build && make test
