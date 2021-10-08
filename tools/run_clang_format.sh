@@ -8,8 +8,8 @@ source tools/utils.sh
 
 print_info "Format all files using clang-format"
 # We currently don't format test files
-find . ! -path "./build/*" ! -path "./tests/*" ! -path "./third_party/*" \
+find src tests \
     -type f \( -name "*.cpp" \
-    -o -name "*.hpp" \) \
+    -o -name "*.hpp" -o -name "*.h" \) \
     -exec clang-format \
     -i -style=file {} \;

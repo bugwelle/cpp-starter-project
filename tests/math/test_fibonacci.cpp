@@ -2,7 +2,8 @@
 
 #include "math/fibonacci.hpp"
 
-TEST_CASE("fibonacci numbers are computed", "[fibonacci]") {
+TEST_CASE("fibonacci numbers are computed", "[fibonacci]")
+{
     using namespace CppStarter::Math;
     CHECK(fibonacci(0) == 0);
     CHECK(fibonacci(1) == 1);
