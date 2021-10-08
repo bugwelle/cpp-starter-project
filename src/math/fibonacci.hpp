@@ -1,6 +1,6 @@
 #pragma once
 
-#include <concepts>
+#include <type_traits>
 
 namespace CppStarter::Math {
 
@@ -9,7 +9,7 @@ namespace CppStarter::Math {
  *
  * @param nums nth's fibonacci number
  */
-template <std::integral T>
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 [[nodiscard]] T fibonacci(T num)
 {
     if (num == 0) {
