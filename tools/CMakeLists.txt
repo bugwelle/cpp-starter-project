@@ -4,10 +4,7 @@ find_package(CMakeFormat)
 
 # -----------------------------------------------------------------------------
 # cppcheck
-if(NOT CppCheck_FOUND)
-  message(AUTHOR_WARNING "cppcheck not found - no target 'cppcheck' created")
-
-else()
+if(CppCheck_FOUND)
   # We take advantage of our project structure and that all include paths are
   # relative to `src`. I dislike using CXX_CPPCHECK as it runs next to the
   # compiler but doesn't require compiling the source code if run as a separate
@@ -25,12 +22,7 @@ endif()
 
 # -----------------------------------------------------------------------------
 # Bash script linting using shellcheck
-if(NOT Shellcheck_FOUND)
-  message(
-    AUTHOR_WARNING "shellcheck not found - no target 'shellcheck' created"
-  )
-
-else()
+if(Shellcheck_FOUND)
   add_custom_target(
     shellcheck
     COMMAND ${SHELLCHECK_EXE} "${CMAKE_SOURCE_DIR}/tools/*.sh"
@@ -40,12 +32,7 @@ endif()
 
 # -----------------------------------------------------------------------------
 # cmake-format
-if(NOT CMakeFormat_FOUND)
-  message(
-    AUTHOR_WARNING "cmake-format not found - no target 'cmakeformat' created"
-  )
-
-else()
+if(CMakeFormat_FOUND)
   add_custom_target(
     cmake-format
     COMMAND

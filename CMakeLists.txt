@@ -25,32 +25,17 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 include(MiscFunctions)
 check_no_in_source_build()
-# conan requires that CMAKE_BUILD_TYPE is set.  If none is set, use this
-# default.
 set_default_build_type("RelWithDebInfo")
 
 # for Thread/Address/Memory/UB Sanitizers
 find_package(Sanitizers)
 
+include(FetchContent)
 include(GenerateExportHeader) # TODO: WHY?
 include(warnings) # custom function that enables compiler warnings
 include(GetGitRevisionDescription)
 include(coverage) # for lcov and gcov code coverage
 include(clang-tidy)
-
-# Package Manager includes
-include(conan)
-
-conan_cmake_run(
-  CONANFILE
-  conanfile.txt
-  BASIC_SETUP # Conan Basic Setup
-  NO_OUTPUT_DIRS # Don't mess with CMake's default build structure
-  PROFILE_AUTO # Use CMake Compiler settings
-  CMAKE_TARGETS # Use CMake targets
-  BUILD
-  missing
-)
 
 # -----------------------------------------------------------------------------
 # Get git revision
