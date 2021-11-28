@@ -3,6 +3,10 @@ build
 CMakeLists.txt.user*
 docs/user/source/release-notes.rst
 
+# IDEs
+.vscode/
+.idea/
+
 # Prerequisites
 *.d
 
