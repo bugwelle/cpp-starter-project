@@ -13,14 +13,6 @@ environment:
 init:
   - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
-install:
-  # See https://docs.conan.io/en/latest/integrations/appveyor.html
-  - cmd: echo "Downloading conan..."
-  - cmd: set PATH=%PATH%;%PYTHON%/Scripts/
-  - cmd: if %platform%==mingw set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0;%PATH%
-  - cmd: pip.exe install conan
-  - cmd: conan user # Create the conan data directory
-
 before_build:
   - cmd: set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
 

@@ -2,7 +2,6 @@
 
  - [README](README.md)
  - [C++ Project Structure](project-structure.md)
- - [Package Manager: Conan](conan.md)
  - [Build System: CMake](cmake.md)
  - [Continuous Integration](continuous-integration.md)
  - [Continuous Deployment](continuous-deployment.md)

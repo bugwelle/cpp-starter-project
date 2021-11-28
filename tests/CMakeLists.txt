@@ -1,9 +1,18 @@
 # -----------------------------------------------------------------------------
 # Tests
 
+# I use FetchContent here because Catch2 is a small dependency, that is only
+# used for testing.  You could also use: find_package(Catch2 REQUIRED)
+fetchcontent_declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG v2.13.1
+)
+fetchcontent_makeavailable(Catch2)
+
 add_executable(cpp_test)
 target_include_directories(cpp_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(cpp_test PRIVATE CONAN_PKG::catch2 cpp_starter_math)
+target_link_libraries(cpp_test PRIVATE Catch2::Catch2 cpp_starter_math)
 
 target_sources(
   cpp_test

@@ -9,13 +9,6 @@ if(DOXYGEN_FOUND)
   doxygen_add_docs(
     doxygen ../README.md ../src COMMENT "Generate doxygen documentation"
   )
-
-else()
-  message(
-    AUTHOR_WARNING
-      "Doxygen needs to be installed to generate developer documentation"
-  )
-
 endif()
 
 # ------------------------------------------------------------------------------
@@ -29,10 +22,4 @@ if(SPHINX_FOUND)
       "${CMAKE_CURRENT_BINARY_DIR}/user"
     COMMENT "Build HTML documentation with Sphinx"
   )
-
-else()
-  message(
-    AUTHOR_WARNING "Sphinx needs to be installed to generate user documentation"
-  )
-
 endif()

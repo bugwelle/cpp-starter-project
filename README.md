@@ -51,9 +51,12 @@ Following features are included:
      ([Travis CI][travis], [AppVeyor][appveyor], [GitLab CI][gitlabci])
  - [ ] continuous deployment to [GitHub Pages][githubpg]
  - [x] code coverage using [Codecov][codecov]
- - [x] third-party package management using [conan][conan]
  - [ ] CPack script for packaging
 
+## What's not included?
+This project no longer uses Conan as package manager.  I've also not included VCPKG or other package
+managers.  None are perfect, all have their drawbacks.  If you want to use Conan, you can still do so.
+Please refer to their "[Getting started](https://docs.conan.io/en/latest/getting_started.html)" guide.
 
 ## Inspiration
 This project was inspired by:
@@ -85,10 +88,6 @@ This project uses:
    - Website: https://github.com/ericniebler/range-v3
    - License: [Boost Software License 1.0](https://github.com/ericniebler/range-v3/blob/master/LICENSE.txt)
    - Reason: C++ ranges implementation
- - Conan
-   - Website: https://conan.io/
-   - License: [MIT License](https://github.com/conan-io/conan/blob/develop/LICENSE.md)
-   - Reason: C++ Package Manager
 
 We also use some CMake modules. See `cmake/README.md`.
 
@@ -113,7 +112,6 @@ Because we use range-v3 and other modern C++ features, we only support these com
 [cmake]:     https://cmake.org/
 [cmakefmt]:  https://github.com/cheshirekow/cmake_format
 [codecov]:   https://codecov.io/
-[conan]:     https://conan.io/
 [cppcheck]:  http://cppcheck.sourceforge.net/
 [doxygen]:   http://www.doxygen.nl/
 [ghpages]:   https://bugwelle.github.io/cpp-starter-project/

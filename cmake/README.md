@@ -2,12 +2,6 @@
 
 List of all modules and third party licenses that are used in this project.
 
-`conan.cmake`
- - from Conan project
- - Website: https://github.com/conan-io/cmake-conan
- - License: [MIT License](https://github.com/conan-io/cmake-conan/blob/develop/LICENSE)
- - Version v0.13 (git tag)
-
 `warnings.cmake`
 `FindShellcheck.cmake`
 `FindCMakeFormat.cmake`
@@ -42,4 +36,3 @@ List of all modules and third party licenses that are used in this project.
 `CatchAddTests.cmake`
  - Website: https://github.com/catchorg/Catch2 (2019-01-30)
  - License: [Boost Software License 1.0](https://github.com/catchorg/Catch2/blob/master/LICENSE.txt)
- - Copy due to conan not downloading CMake files

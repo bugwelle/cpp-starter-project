@@ -19,9 +19,7 @@ matrix:
   # already fails, we can skip others stages.
   #----------------------------------------------------------------------------
 
-  # Travis CI has integrated ShellCheck by default. This is faster than using
-  # cmake with shellcheck target because we don't need to install conan
-  # dependencies.
+  # Travis CI has integrated ShellCheck by default.
   - name: "shellcheck linting"
     stage: check
     language: shell
@@ -50,9 +48,7 @@ matrix:
     before_install:
       - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         # install modern gcc for std lib
-      - sudo apt install clang-12 clang-tidy-12 g++-11 python3-setuptools python3-pip
-    install:
-      - pip3 install conan cmake
+      - sudo apt install clang-12 clang-tidy-12 g++-11
     before_script:
       - cd tools
     script:
@@ -81,22 +77,17 @@ matrix:
     os: osx
     osx_image: xcode10
     compiler: clang
-    install:
-      - pip3 install cmake conan
 
   # Linux build and test using gcc-11. Dependencies are installed using the APT
   # addon, though "apt-get install ABC" works as well.
-  # We need some python packages to install conan.
   - name: "linux build with GCC 11"
     stage: test
     env: CC=gcc-11 CXX=g++-11
     before_install:
       - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
       - sudo apt install gcc-11 g++-11 python3-setuptools python3-pip
-    # See https://docs.conan.io/en/latest/integrations/ci/travisci.html
     install:
-      - pip3 install conan cmake
-      - conan user
+      - pip3 install cmake
 
   - name: "linux build with GCC 10"
     stage: test
@@ -105,8 +96,7 @@ matrix:
       - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
       - sudo apt install gcc-10 g++-10 python3-setuptools python3-pip
     install:
-      - pip3 install conan cmake
-      - conan user
+      - pip3 install cmake
 
   # Windows build and test. Windows support is currently in beta on Travis.
   # CMake and MinGw are installed by default.
@@ -120,17 +110,7 @@ matrix:
   #   compiler: gcc
   #   # env:
   #   #  - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
-  #   install:
-  #     - choco install python3
-  #     - export PATH="/c/Python310:/c/Python310/Scripts:$PATH"
-  #     - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-  #     - python --version
-  #     - ls /c
-  #     - python3 get-pip.py --user
-  #     - python3 -m pip install conan
-  #     - conan user
   #   script:
-  #     - conan install ..
   #     - echo "CC=$CC"
   #     - echo "CXX=$CXX"
   #     - cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" .. &&
@@ -143,23 +123,19 @@ matrix:
   # report.
   #----------------------------------------------------------------------------
 
-  # Linux coverage build and test execution using gcc-11. Dependencies are
-  # installed using the APT addon, though "apt-get install ABC" works as well.
-  # We need some python packages to install conan.
+  # Linux coverage build and test execution using gcc-11.
   - name: "linux coverage run"
     stage: coverage
     env: CC=gcc-11 CXX=g++-11
     before_install:
       - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
       - sudo apt install gcc-11 g++-11 python3-setuptools python3-pip
-    # See https://docs.conan.io/en/latest/integrations/travisci.html
     install:
       # I had to many issues with older versions of lcov; use latest
       - git clone https://github.com/linux-test-project/lcov.git &&
         ( cd lcov && sudo make install )
       - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-11 10
-      - pip3 install conan cmake
-      - conan user
+      - pip3 install cmake
     script:
       - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON &&
         make -j$(nproc)                                        &&

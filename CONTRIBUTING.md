@@ -7,7 +7,6 @@ This project uses many (modern) tools, so you may need to install quite a lot fi
 You need to install:
 
  - [CMake](https://cmake.org/)
- - [Conan](https://conan.io/)
  - [Visual Studio 15](https://visualstudio.microsoft.com/) or
    [MinGW 64](https://mingw-w64.org/doku.php)
 
@@ -23,7 +22,7 @@ Following tools are optional but recommended:
 These instructions were tested on Ubuntu 18.04:
 
 ```sh
-pip3 install conan cmake_format
+pip3 install cmake cmake_format
 sudo apt install doxygen doxygen-doc
 sudo apt install shellcheck
 sudo apt install gcc g++
@@ -52,7 +51,6 @@ make test         # Run all tests (`ctest` works as well)
 ```sh
 cd cpp-starter-project
 mkdir build && cd $_
-# Also installs third party dependencies using conan
 cmake -DCMAKE_BUILD_TYPE=Debug ..
 make -j$(nproc)
 ```
@@ -63,7 +61,6 @@ make -j$(nproc)
 cd cpp-starter-project
 mkdir build
 cd build
-conan user
 cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 15 2017 Win64" .. # or "MinGW Makefiles"
 cmake --build . --config "Debug"
 ```
