@@ -17,7 +17,6 @@ message("=> Project: ${PROJECT_NAME}")
 option(ENABLE_CLANG_TIDY       "Analyze code with clang-tidy."                OFF)
 option(ENABLE_CLANG_TIDY_FIX   "Analyze code with clang-tidy and fix errors." OFF)
 option(ENABLE_COVERAGE         "Add coverage information to binaries."        OFF)
-option(ENABLE_COTIRE           "Disable cotire."                              OFF)
 # cmake-format: on
 
 # -----------------------------------------------------------------------------
@@ -33,9 +32,6 @@ set_default_build_type("RelWithDebInfo")
 # for Thread/Address/Memory/UB Sanitizers
 find_package(Sanitizers)
 
-if(ENABLE_COTIRE)
-  include(cotire) # Used for precompiled headers and other optimizations
-endif()
 include(GenerateExportHeader) # TODO: WHY?
 include(warnings) # custom function that enables compiler warnings
 include(GetGitRevisionDescription)
@@ -88,9 +84,6 @@ function(set_post_target_defaults target)
   enable_warnings(${target})
   target_enable_coverage(${target})
   add_sanitizers(${target})
-  if(ENABLE_COTIRE)
-    cotire(${target})
-  endif()
 endfunction()
 
 # -----------------------------------------------------------------------------

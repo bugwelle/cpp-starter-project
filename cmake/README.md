@@ -15,10 +15,6 @@ List of all modules and third party licenses that are used in this project.
 `FindCppCheck.cmake`
  - custom implementation (cpp-starter-project)
 
-`cotire.cmake`  
- - Website: https://github.com/sakra/cotire (2018-12-15)
- - License: [MIT License](https://github.com/sakra/cotire/blob/master/license)
-
  `FindASan.cmake`
  `FindMSan.cmake`
  `FindSanitizers.cmake`
