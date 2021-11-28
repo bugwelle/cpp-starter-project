@@ -14,7 +14,6 @@ source tools/utils.sh
 print_info "Run cmake-format on all CMake files"
 find . -type f \
     ! -path "./build/*" \
-    ! -name 'cotire.cmake' \
     ! -name 'conan.cmake' \
     \( -name "CMakeLists.txt" -o -name "*.cmake" \) \
     -exec cmake-format -c .cmake-format -i  {} +

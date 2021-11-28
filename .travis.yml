@@ -161,8 +161,8 @@ matrix:
       - pip3 install conan cmake
       - conan user
     script:
-      - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COTIRE=OFF -DENABLE_COVERAGE=ON &&
-        make -j$(nproc)                                                            &&
+      - cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON &&
+        make -j$(nproc)                                        &&
         make coverage
       - bash <(curl -s https://codecov.io/bash) -f coverage-filtered.info || echo "Codecov did not collect coverage reports"
 
