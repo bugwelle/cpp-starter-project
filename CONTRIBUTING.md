@@ -98,7 +98,7 @@ The memory sanitizer is as of now (2018-12-18) only available for clang.
 
 ## Branching policy
 
-Currently, all work is done on the `master` branch.
+Currently, all work is done on the `main` branch.
 For each change that you want to submit by creating a new pull requests,
 please create a new branch that has a meaningful name, e.g. `fix-memory-leak`
 or `fix-nn` where `nn` is the id of an GitHub issue.

@@ -6,9 +6,9 @@ IFS=$'\n\t'
 # cd into this file's directory
 cd "$( cd "$(dirname "$0")"; pwd -P )"
 
-# get a clean master branch
-git checkout master
-git pull origin master
+# get a clean main branch
+git checkout main
+git pull origin main
 git clean -df
 git checkout -- .
 git fetch --all
@@ -43,4 +43,4 @@ else
     echo "directory build does not exists"
 fi
 
-git checkout master
+git checkout main

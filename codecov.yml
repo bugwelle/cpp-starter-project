@@ -13,7 +13,7 @@ coverage:
     - "**/external/clara/clara.hpp"
 
 codecov:
-  branch: master
+  branch: main
 
 comment:
   layout: "diff"

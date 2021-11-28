@@ -27,6 +27,6 @@ touch .nojekyll
 git add .nojekyll
 git commit -m "init gh-pages"
 git push origin gh-pages
-git checkout master
+git checkout main
 ./docs/user/publish_gh-pages.sh
 ```
