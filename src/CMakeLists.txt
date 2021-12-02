@@ -1,15 +1,18 @@
 # -----------------------------------------------------------------------------
 # Dependencies
 
-# I use FetchContent here for now. You could also use: find_package(range-v3
-# REQUIRED)
-fetchcontent_declare(
-  range-v3
-  GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
-  GIT_TAG 0.11.0
-)
+find_package(range-v3 0.11 QUIET)
+if (NOT range-v3_FOUND)
+  # I use FetchContent here for now. You could also use: find_package(range-v3
+  # REQUIRED)
+  fetchcontent_declare(
+    range-v3
+    GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
+    GIT_TAG 0.11.0
+  )
 
-fetchcontent_makeavailable(range-v3)
+  fetchcontent_makeavailable(range-v3)
+endif()
 
 # -----------------------------------------------------------------------------
 # Modules
@@ -25,7 +28,7 @@ configure_file(version.hpp.in ${PROJECT_BINARY_DIR}/version.hpp @ONLY)
 
 # -----------------------------------------------------------------------------
 # Installation
-install(TARGETS cpp_starter RUNTIME DESTINATION bin)
+install(TARGETS cpp_starter RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
 # -----------------------------------------------------------------------------
 # Sources
