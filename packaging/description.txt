@@ -1,0 +1,2 @@
+A description of the project, used in places such as the
+introduction screen of CPack-generated Windows installers.

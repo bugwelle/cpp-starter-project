@@ -7,6 +7,9 @@ docs/user/source/release-notes.rst
 .vscode/
 .idea/
 
+# Operating Systems
+.DS_Store
+
 # Prerequisites
 *.d
 

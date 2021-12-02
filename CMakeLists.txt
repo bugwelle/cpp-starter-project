@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(
   cpp_starter
-  VERSION 0.1.0
+  VERSION 0.2.0
   DESCRIPTION "C++ Starter Project"
   HOMEPAGE_URL "https://github.com/bugwelle/cpp-starter-project"
   LANGUAGES CXX
@@ -30,6 +30,7 @@ set_default_build_type("RelWithDebInfo")
 # for Thread/Address/Memory/UB Sanitizers
 find_package(Sanitizers)
 
+include(GNUInstallDirs)
 include(FetchContent)
 include(GenerateExportHeader) # TODO: WHY?
 include(warnings) # custom function that enables compiler warnings
@@ -85,3 +86,23 @@ include(Catch)
 enable_testing() # Per CMake documentation, enable_testing() must be called in
                  # the root directory.
 add_subdirectory(tests)
+
+# -----------------------------------------------------------------------------
+# Packaging
+
+include(InstallRequiredSystemLibraries)
+
+# See https://cmake.org/cmake/help/latest/module/CPack.html#variables-common-to-all-cpack-generators
+set(CPACK_PACKAGE_VENDOR "bugwelle")
+set(CPACK_PACKAGE_CHECKSUM "SHA512")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_LIST_DIR}/packaging/description.txt")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_LIST_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_LIST_DIR}/README.md")
+set(CPACK_PACKAGE_EXECUTABLES "cpp_starter;C++ Starter")
+set(CPACK_VERBATIM_VARIABLES True)
+set(CPACK_THREADS 0)
+
+# Specific to macOS
+set(CPACK_BUNDLE_NAME "C++ Starter")
+
+include(CPack)
