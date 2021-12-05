@@ -1,7 +1,8 @@
-version: '{branch}-{build}'
+version: 1.0.{build}
 
 image:
   - Visual Studio 2019
+  - Visual Studio 2022
 
 clone_folder: C:\projects\source
 clone_depth: 1
@@ -9,17 +10,16 @@ clone_depth: 1
 environment:
   matrix:
     - generator: "Visual Studio 16 2019"
-
-platform:
-  - x64
-
 init:
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - cmd: echo "%image%"
+  - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\%image%\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 before_build:
   - cmd: set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
 
 build_script:
+  - cmd: echo "%image%"
+  - cmd: echo "%generator%"
   - cmd: mkdir build
   - cmd: cd build
   - cmd: cmake -G "%generator%" -DCMAKE_BUILD_TYPE=Debug ..
@@ -28,5 +28,3 @@ build_script:
 test_script:
   - cmd: ctest -C Debug
 
-matrix:
-  fast_finish: true
