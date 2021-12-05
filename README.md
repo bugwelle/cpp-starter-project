@@ -1,7 +1,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d6cd38c4a97341f79b1712548444e703)](https://www.codacy.com/gh/bugwelle/cpp-starter-project/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bugwelle/cpp-starter-project&amp;utm_campaign=Badge_Grade)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Travis CI Build Status](https://app.travis-ci.com/bugwelle/cpp-starter-project.svg?branch=main)](https://app.travis-ci.com/bugwelle/cpp-starter-project)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/j56v8bgwtk24tuu9/branch/main?svg=true)](https://ci.appveyor.com/project/archer96/cpp-starter-project/branch/main)[![GitLab CI Pipeline Status](https://img.shields.io/gitlab/pipeline/bugwelle/cpp-starter-project.svg?logo=gitlab)](https://gitlab.com/bugwelle/cpp-starter-project/pipelines)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/j56v8bgwtk24tuu9/branch/main?svg=true)](https://ci.appveyor.com/project/bugwelle/cpp-starter-project/branch/main)[![GitLab CI Pipeline Status](https://img.shields.io/gitlab/pipeline/bugwelle/cpp-starter-project.svg?logo=gitlab)](https://gitlab.com/bugwelle/cpp-starter-project/pipelines)
 [![codecov](https://codecov.io/gh/bugwelle/cpp-starter-project/branch/main/graph/badge.svg)](https://codecov.io/gh/bugwelle/cpp-starter-project)
 
 
@@ -104,7 +104,7 @@ Because we use range-v3 and other modern C++ features, we only support these com
    - TODO: clang
    - TODO: GCC
 
-[appveyor]:  https://ci.appveyor.com/project/archer96/cpp-starter-project
+[appveyor]:  https://ci.appveyor.com/project/bugwelle/cpp-starter-project
 [catch2]:    https://github.com/catchorg/Catch2
 [clangfmt]:  https://clang.llvm.org/docs/ClangFormat.html
 [clangtidy]: https://clang.llvm.org/extra/clang-tidy/
